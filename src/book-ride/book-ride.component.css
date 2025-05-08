@@ -1,0 +1,33 @@
+/* Booking Ride Button */
+button {
+    background-color: #f97316; /* Orange color */
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 9999px; /* Rounded button */
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  button:hover {
+    background-color: #f59e0b; /* Darker shade on hover */
+  }
+  
+  /* Input and Select Styles */
+  input, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9fafb;
+  }
+  
+  /* Container Styling */
+  .bg-white {
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    border-radius: 12px;
+  }
+  

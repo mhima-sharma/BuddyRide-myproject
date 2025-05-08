@@ -1,0 +1,28 @@
+<div
+  class="min-h-screen bg-cover bg-center flex items-center justify-center"
+  style="background-image: url('../assets/images/map.jpg');">
+<div class="container mt-40 max-w-md mx-auto bg-white p-4 rounded shadow">
+    <h2 class="text-center font-bold text-orange-700 text-2xl mb-4">Enter OTP</h2>
+  
+    <form  >
+      <div class="mb-3 flex flex-col">
+        <label for="otp" class="form-label text-orange-700">OTP</label>
+        <input
+          type="text"
+          id="otp"
+          maxlength="6"
+          class="form-control mt-2 text-gray-500"
+          formControlName="otp"
+          placeholder="Enter otp"
+          />
+      </div>
+  
+      <button type="submit" routerLink="/reset" routerLinkActive="router-link-active"  class=" w-100 bg-orange-700 text-white rounded-xl p-2">Verify OTP</button>
+  
+      <div class="text-center mt-3 cursor-pointer">
+        <button type="button" class="text-orange-700" >Resend OTP</button>
+      </div>
+    </form>
+  </div>
+</div>
+  

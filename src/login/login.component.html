@@ -1,0 +1,48 @@
+<div
+  class="min-h-screen bg-cover bg-center flex items-center justify-center"
+  style="background-image: url('../assets/images/map.jpg');">
+
+  <div class="bg-white bg-opacity-90 backdrop-blur-md p-8 rounded-3xl shadow-2xl w-full max-w-md mx-4">
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Welcome Back</h2>
+      <p class="text-center text-orange-600 mb-6">Login with BuddyRide</p>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 font-medium mb-1">Email</label>
+        <input
+          formControlName="email"
+          type="email"
+          class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+          placeholder="Enter your email"
+        />
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-700 font-medium mb-1">Password</label>
+        <input
+          formControlName="password"
+          type="password"
+          class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+          placeholder="Enter your password"
+        />
+      </div>
+
+     
+
+      <button
+        type="submit"
+        class="w-full bg-orange-600 cursor-pointer hover:bg-orange-700 text-white p-3 rounded-lg font-semibold transition duration-300"
+      >
+        Login
+      </button>
+      <p class="text-sm text-center text-orange-700 mt-2">
+        Not registered yet?
+        <a class="text-orange-500  hover:underline" routerLink="/signup">Sign up here</a>
+      </p>
+
+      <!-- <p class="text-sm text-center text-orange-500 mb-4">
+        <a routerLink="/forgot" class="hover:underline">Forgot Password?</a>
+      </p> -->
+    </form>
+  </div>
+</div>

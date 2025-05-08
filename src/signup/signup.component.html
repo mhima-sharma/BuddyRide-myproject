@@ -1,0 +1,30 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-100"
+style="background-image: url('../assets/images/map.jpg')"
+>
+ 
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="bg-white p-8 rounded shadow-md w-full max-w-md">
+      <h2 class="text-2xl font-bold mb-6 text-center">Sign Up</h2>
+  
+      <div class="mb-4">
+        <label class="block text-gray-700">Name</label>
+        <input formControlName="name" type="text" class="mt-1 w-full p-2 border rounded" placeholder="name" />
+      </div>
+  
+      <div class="mb-4">
+        <label class="block text-gray-700">Email</label>
+        <input formControlName="email" type="email" class="mt-1 w-full p-2 border rounded" placeholder="Email" />
+      </div>
+  
+      <div class="mb-4">
+        <label class="block text-gray-700">Password</label>
+        <input formControlName="password" type="password" class="mt-1 w-full p-2 border rounded" placeholder="Password" />
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700">Confirm Password</label>
+        <input formControlName="confirmPassword" type="password" class="mt-1 w-full p-2 border rounded" placeholder="Confirm Password" />
+      </div>
+      <button type="submit" class="w-full cursor-pointer bg-orange-700 text-white p-2 rounded hover:bg-orange-600">Sign Up</button>
+    <p  class="text-orange-700 text-center mt-2">If you are already Rigistered? <a class="text-orange-500" routerLink="/login" >Login</a></p>
+    </form>
+  </div>
+  

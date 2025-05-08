@@ -1,0 +1,61 @@
+<div class="bg-white fixed w-full z-10 shadow-md pl-11 pr-5">
+  <div class="flex justify-between items-center px-4 py-2 md:px-8">
+    <!-- Logo -->
+    <h1 class="text-2xl md:text-4xl font-bold text-orange-700">BuddyRide</h1>
+
+    <!-- Hamburger menu button (visible on small screens) -->
+    <button class="md:hidden text-orange-700 text-2xl" (click)="toggleMobileMenu()">
+      ☰
+    </button>
+
+    <!-- Desktop Menu -->
+    <div class="hidden md:flex space-x-4 items-center">
+      <button routerLink="/search" class="text-orange-700 font-semibold py-2 px-3 rounded-lg hover:bg-gray-100">🔍 Search</button>
+      <button routerLink="/pick-up" class="text-orange-700 font-medium py-2 px-3 rounded hover:bg-gray-100">Publish Ride</button>
+      <!-- Settings Dropdown -->
+      <div class="relative  text-left  flex">
+        <div class="relative group">
+          <div class="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center text-xl">
+            👤
+          </div>
+          <input type="file" (change)="handleFileInput($event, 'profileImage')" class="absolute inset-0 opacity-0 cursor-pointer" />
+         
+        </div>
+        
+        <button (click)="toggleDropdown()" class="text-orange-700 font-bold py-2 px-3 hover:bg-gray-100   rounded">
+          ˅
+        </button>
+        <div *ngIf="dropdownOpen" class="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
+          <div class="py-1">
+            <button routerLink="/profile" class="block w-full text-left text-orange-700 px-4 py-2 text-sm hover:bg-gray-100">User Profile</button>
+            <button (click)="actionOne()" class="block w-full text-left text-orange-700 px-4 py-2 text-sm hover:bg-gray-100">Change Password</button>
+            <button routerLink="/complaint" class="block w-full text-left text-orange-700 px-4 py-2 text-sm hover:bg-gray-100">Do you have any issue?</button>
+            <button routerLink="/term-cond" class="block w-full text-left text-orange-700 px-4 py-2 text-sm hover:bg-gray-100">Terms and Conditions</button>
+            <button routerLink="/blog" class="block w-full text-left text-orange-700 px-4 py-2 text-sm hover:bg-gray-100">Blog</button>
+            <button routerLink="/safety" class="block w-full text-left text-orange-700 px-4 py-2 text-sm hover:bg-gray-100">Safety</button>
+            <button (click)="logout()" class="block w-full text-left text-orange-700 px-4 py-2 text-sm hover:bg-gray-100">LogOut</button>
+            <button routerLink="/my-ride" class="block w-full text-left text-orange-700 px-4 py-2 text-sm hover:bg-gray-100">My Rides</button>
+            <button routerLink="/published" class="block w-full text-left text-orange-700 px-4 py-2 text-sm hover:bg-gray-100">All Published Rides</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div *ngIf="mobileMenuOpen" class="md:hidden px-4 pb-4 space-y-2 ">
+    <button routerLink="/search" class="block w-full text-left text-orange-700 py-2 hover:bg-gray-100">🔍 Search</button>
+    <button routerLink="/pick-up" class="block w-full text-left text-orange-700 py-2 hover:bg-gray-100">Publish Ride</button>
+    <button routerLink="/published" class="block w-full text-left text-orange-700 py-2 hover:bg-gray-100">Published Ride</button>
+    <button routerLink="/my-ride" class="block w-full text-left text-orange-700 py-2 hover:bg-gray-100">My Rides</button>
+    <hr />
+    <button routerLink="/profile" class="block w-full text-left text-orange-700 py-2 hover:bg-gray-100">User Profile</button>
+    <button (click)="actionOne()" class="block w-full text-left text-orange-700 py-2 hover:bg-gray-100">Change Password</button>
+    <button routerLink="/complaint" class="block w-full text-left text-orange-700 py-2 hover:bg-gray-100">Do you have any issue?</button>
+    <button routerLink="/term-cond" class="block w-full text-left text-orange-700 py-2 hover:bg-gray-100">Terms and Conditions</button>
+    <button routerLink="/blog" class="block w-full text-left text-orange-700 py-2 hover:bg-gray-100">Blog</button>
+    <button routerLink="/safety" class="block w-full text-left text-orange-700 py-2 hover:bg-gray-100">Safety</button>
+    <button (click)="logout()" class="block w-full text-left text-orange-700 py-2 hover:bg-gray-100">LogOut</button>
+  </div>
+</div>

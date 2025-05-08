@@ -1,0 +1,105 @@
+<app-header></app-header>
+
+<div
+  class="pt-20 pb-20"
+  style="background-image: url('https://media.istockphoto.com/id/1365590841/vector/vector-illustration-of-a-rustic-dark-brown-coloured-wooden-or-timber-textured-effect-empty.jpg?s=612x612&w=0&k=20&c=PW6ZBA7Woa2Q4cv0QLLJxg-imIte3oWYR9xEGIIIAdY=')"
+>
+  <h1 class="text-white text-center font-bold text-2xl">
+    Become a BuddyRide driver and save on travel costs by sharing your ride with passengers.
+  </h1>
+
+  <div class="bg-white p-6 rounded-2xl shadow-md w-64 font-sans ml-140 mt-5">
+    <!-- From Location -->
+    <div class="relative flex justify-between items-center mb-2">
+      <input
+        type="text"
+        [(ngModel)]="field1"
+        placeholder="From"
+        #locationInput
+       
+        class="w-full p-2 border border-gray-300 rounded"
+      />
+      <button (click)="switchValues()" class="text-orange-700 text-xl cursor-pointer">↔</button>
+      
+    </div>
+    <hr class="mb-2" />
+
+    <!-- To Location -->
+    <div class="relative mb-2">
+      <input
+        type="text"
+        [(ngModel)]="field2"
+        placeholder="To"
+        #dropoffInput
+       
+        class="w-full p-2 border border-gray-300 rounded"
+      />
+     
+    </div>
+    <hr class="mb-4" />
+
+    <!-- Passenger Info -->
+    <div class="flex items-center text-orange-700 text-sm mb-4">
+      <div
+        class="flex items-center gap-4 px-4 py-1 rounded-full shadow-md w-fit text-gray-500 bg-gray-100 m-2 p-4 h-15"
+      >
+        <span class="text-orange-700 font-semibold">👤</span>
+
+        <button
+          class="w-8 h-8 flex items-center justify-center rounded-full border border-gray-300 text-xl text-gray-400 disabled:opacity-30 hover:text-orange-700 hover:border-orange-700"
+          (click)="decrease()"
+          [disabled]="passengerCount <= 1"
+        >
+          &minus;
+        </button>
+
+        <span class="text-gray-700 font-medium text-lg">{{ passengerCount }}</span>
+
+        <button
+          class="w-8 h-8 flex items-center justify-center rounded-full border border-orange-700 text-orange-700 text-xl hover:bg-blue-50 transition"
+          (click)="increase()"
+        >
+          &#43;
+        </button>
+      </div>
+    </div>
+
+    <!-- Offer Text -->
+    <p class="text-base font-medium mb-5">
+      Save more on your <span class="text-orange-700 cursor-pointer font-bold">Published Rides</span><br />
+      by sharing them with others and splitting the costs!
+    </p>
+
+    <p class="text-amber-300" *ngIf="error">{{message}}</p>
+    <!-- Button -->
+  <button class="w-full bg-orange-700 text-white cursor-pointer font-semibold py-2 rounded-lg hover:bg-orange-600 transition" (click)="publishRide()">Publish a ride</button>
+   
+  </div>
+</div>
+
+<!-- Bottom Section -->
+<div>
+  <h1 class="text-4xl font-bold text-orange-700 text-center mt-8">Drive. Share. Save.</h1>
+  <div class="flex m-10 justify-between">
+    <div class="w-1/3 pr-4">
+      <h1 class="font-bold text-orange-700 text-xl">Drive.</h1>
+      <p class="text-gray-600 mt-2">
+        Keep your plans! Hit the road just as you anticipated and make the most of your vehicle’s empty seats.
+      </p>
+    </div>
+    <div class="w-1/3 px-4">
+      <h1 class="font-bold text-orange-700 text-xl">Share.</h1>
+      <p class="text-gray-600 mt-2">
+        Travel with good company. Share a memorable ride with travellers from all walks of life.
+      </p>
+    </div>
+    <div class="w-1/3 pl-4">
+      <h1 class="font-bold text-orange-700 text-xl">Save.</h1>
+      <p class="text-gray-600 mt-2">
+        Tolls, petrol, electricity… Easily divvy up all the costs with other passengers.
+      </p>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

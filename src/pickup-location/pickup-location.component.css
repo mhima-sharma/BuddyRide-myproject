@@ -1,0 +1,10 @@
+#map {
+    height: 400px;
+    width: 100%;
+  }
+  
+  .location-details {
+    margin-top: 20px;
+    font-size: 16px;
+  }
+  

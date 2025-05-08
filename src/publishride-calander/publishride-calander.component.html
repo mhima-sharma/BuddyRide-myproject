@@ -1,0 +1,26 @@
+<div class="p-4">
+    <p class="text-4xl text-center text-orange-700 mb-2 font-bold ">When are you going?</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div *ngFor="let month of months">
+        <h2 class="text-xl font-semibold mb-2">
+          {{ month.toLocaleString('default', { month: 'long', year: 'numeric' }) }}
+        </h2>
+        <div class="grid grid-cols-7 gap-1">
+          <div *ngFor="let day of getDaysInMonth(month)"
+               (click)="toggleDateSelection(day)"
+               [ngClass]="{
+                 'bg-blue-500 text-white': isSelected(day),
+                 'bg-gray-100': !isSelected(day)
+               }"
+               class="cursor-pointer text-center p-2 rounded hover:bg-blue-300">
+            {{ day.getDate() }}
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <button (click)="publishRides()" class="mt-6 bg-green-600 text-white px-4 py-2 rounded">
+      Publish Selected Rides
+    </button>
+  </div>
+  
