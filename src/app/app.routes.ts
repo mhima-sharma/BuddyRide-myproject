@@ -6,7 +6,6 @@ import { PublishRideComponent } from '../publish-ride/publish-ride.component';
 import { SignupComponent } from '../signup/signup.component';
 import { LoginComponent } from '../login/login.component';
 import { ForgotComponent } from '../forgot/forgot.component';
-import { OtpComponent } from '../otp/otp.component';
 import { ResetPasswordComponent } from '../reset-password/reset-password.component';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
 import { UserAuthModalComponent } from '../log-out/user-auth-modal.component';
@@ -39,7 +38,7 @@ export const routes: Routes = [
     { path: 'signup', component: SignupComponent },
     { path: 'login', component: LoginComponent },
     { path: 'forgot', component: ForgotComponent},
-    { path: 'otp', component: OtpComponent},
+    
     { path: 'reset', component: ResetPasswordComponent},
     { path: 'change-pass', component: ChangePasswordComponent},
     { path: 'logout', component:LogoutPopupComponent },
