@@ -28,6 +28,7 @@ import { PublishrideTimeComponent } from '../publishride-time/publishride-time.c
 import { ThankyouPageComponent } from '../thankyou-page/thankyou-page.component';
 import { RideDetalisCardComponent } from '../ride-detalis-card/ride-detalis-card.component';
 import { UserRidesComponent } from '../user-rides/user-rides.component';
+import { ContactWithUsComponent } from '../contact-with-us/contact-with-us.component';
 
 export const routes: Routes = [
     { path: '', component: SplashComponent },
@@ -57,7 +58,7 @@ export const routes: Routes = [
     { path: 'thanks', component: ThankyouPageComponent},
     { path: 'ride-detail', component: RideDetalisCardComponent},
     { path: 'my-ride', component: UserRidesComponent},
-
+    { path: 'contact', component: ContactWithUsComponent},
     // { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }
 
