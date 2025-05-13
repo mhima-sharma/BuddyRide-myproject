@@ -39,7 +39,6 @@ export const routes: Routes = [
     { path: 'signup', component: SignupComponent },
     { path: 'login', component: LoginComponent },
     { path: 'forgot', component: ForgotComponent},
-    
     { path: 'reset', component: ResetPasswordComponent},
     { path: 'change-pass', component: ChangePasswordComponent},
     { path: 'logout', component:LogoutPopupComponent },
@@ -61,18 +60,4 @@ export const routes: Routes = [
     { path: 'contact', component: ContactWithUsComponent},
     // { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
 ];
