@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 export class PublishrideCalanderComponent implements OnInit {
   months: Date[] = [];
   selectedDates: Set<string> = new Set();
+
   constructor(private router: Router) {}
 
   ngOnInit() {
@@ -39,10 +40,20 @@ export class PublishrideCalanderComponent implements OnInit {
     const monthIndex = month.getMonth();
     const days: Date[] = [];
 
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Normalize time
+
     const numDays = new Date(year, monthIndex + 1, 0).getDate();
     for (let i = 1; i <= numDays; i++) {
-      days.push(new Date(year, monthIndex, i));
+      const currentDate = new Date(year, monthIndex, i);
+      currentDate.setHours(0, 0, 0, 0); // Normalize
+
+      // ✅ Show only today or future dates
+      if (currentDate >= today) {
+        days.push(currentDate);
+      }
     }
+
     return days;
   }
 
@@ -62,7 +73,7 @@ export class PublishrideCalanderComponent implements OnInit {
   publishRides() {
     console.log("Publishing rides for:", Array.from(this.selectedDates));
     this.router.navigate(['/time']); 
-    // Call your backend API here
+    // API call to backend can be added here
   }
 
   formatMonthYear(date: Date): string {
