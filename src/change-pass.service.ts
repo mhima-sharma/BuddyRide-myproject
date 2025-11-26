@@ -6,7 +6,7 @@ import { throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class ChangePassService {
-  baseUrl="http://localhost:3000"
+  baseUrl="https://backend-bla-bla.onrender.com"
 
   constructor(private http: HttpClient) { }
   changePassword(data: { currentPassword: string, newPassword: string }) {

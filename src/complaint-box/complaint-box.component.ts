@@ -24,7 +24,7 @@ export class ComplaintBoxComponent {
       userMessage: this.userMessage
     };
 
-    this.http.post('http://localhost:3000/api/complaints/send-message', messageData)
+    this.http.post('https://backend-bla-bla.onrender.com/api/complaints/send-message', messageData)
       .subscribe({
         next: (res: any) => {
           alert(res.message);

@@ -7,7 +7,7 @@ import { io, Socket } from 'socket.io-client';
 })
 export class SocketService {
   private socket: Socket;
-  private serverUrl: string = 'http://localhost:3000'; // Replace with your backend URL
+  private serverUrl: string = 'https://backend-bla-bla.onrender.com'; // Replace with your backend URL
 
   constructor(private http: HttpClient) {
     this.socket = io(this.serverUrl, {
@@ -50,7 +50,7 @@ export class SocketService {
     const userId =  JSON.parse(localStorage.getItem('user') || '{}'); 
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url = `http://localhost:3000/api/rides/${rideId}/request`;
+    const url = `https://backend-bla-bla.onrender.com/api/rides/${rideId}/request`;
     const body = { rideId,userId, status: 'pending' };
 
     return this.http.post(url, body, { headers });

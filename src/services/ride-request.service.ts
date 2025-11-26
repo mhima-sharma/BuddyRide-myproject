@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class RideService {
 
-  private apiUrl = 'http://localhost:3000/api/rides'; // Adjust if hosted
+  private apiUrl = 'https://backend-bla-bla.onrender.com/api/rides'; // Adjust if hosted
 
   constructor(private http: HttpClient) { }
 

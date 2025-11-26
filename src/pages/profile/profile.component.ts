@@ -49,7 +49,7 @@
 //     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`); // Set the token in the headers
 // console.log(token,"token")
 //     // GET request to fetch profile
-//     this.http.get<any>('http://localhost:3000/api/auth/user/profile', { headers }).subscribe({
+//     this.http.get<any>('https://backend-bla-bla.onrender.com/api/auth/user/profile', { headers }).subscribe({
 //       next: data => {
 //         this.profileForm.patchValue(data); // Fill the form with the data from the backend
 //         this.user = data; // Optionally, store the user data for the UI (like profile card)
@@ -65,7 +65,7 @@
 //     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`); // Set the token in the headers
 
 //     // PUT request to update profile
-//     this.http.put('http://localhost:3000/api/user/profile', this.profileForm.value, { headers }).subscribe({
+//     this.http.put('https://backend-bla-bla.onrender.com/api/user/profile', this.profileForm.value, { headers }).subscribe({
 //       next: () => {
 //         alert('Profile updated!'); // Notify user after successful update
 //       },
@@ -113,7 +113,7 @@ export class ProfileComponent implements OnInit {
     const token = localStorage.getItem('authToken');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    this.http.get<any>('http://localhost:3000/api/auth/user/profile', { headers }).subscribe({
+    this.http.get<any>('https://backend-bla-bla.onrender.com/api/auth/user/profile', { headers }).subscribe({
       next: data => {
         this.profileForm.patchValue(data);
       },
@@ -137,7 +137,7 @@ export class ProfileComponent implements OnInit {
     const token = localStorage.getItem('authToken');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    this.http.get<any>('http://localhost:3000/api/auth/user/updated/profile', { headers }).subscribe({
+    this.http.get<any>('https://backend-bla-bla.onrender.com/api/auth/user/updated/profile', { headers }).subscribe({
       next: data => {
         this.profileForm.patchValue(data);
       },
@@ -181,7 +181,7 @@ export class ProfileComponent implements OnInit {
     }
 
     // Make HTTP POST request
-    this.http.post('http://localhost:3000/api/profile/update-profile', formData, { headers }).subscribe({
+    this.http.post('https://backend-bla-bla.onrender.com/api/profile/update-profile', formData, { headers }).subscribe({
       next: (res) => {
         console.log('Profile updated:', res);
         alert('Profile updated successfully!');

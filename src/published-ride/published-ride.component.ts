@@ -15,7 +15,7 @@ export class PublishedRideComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.http.get<any[]>('http://localhost:3000/api/ride/published')  // Update this URL if needed
+    this.http.get<any[]>('https://backend-bla-bla.onrender.com/api/ride/published')  // Update this URL if needed
       .subscribe({
         next: (data) => {
           this.rides = data;

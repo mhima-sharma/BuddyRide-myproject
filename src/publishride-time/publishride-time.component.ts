@@ -74,7 +74,7 @@ ngAfterViewInit(): void {
   };
    
   
-    this.http.post('http://localhost:3000/api/publishride/create', rideData)
+    this.http.post('https://backend-bla-bla.onrender.com/api/publishride/create', rideData)
     .subscribe({
       next: (res) => {
         console.log('Ride submitted', res);

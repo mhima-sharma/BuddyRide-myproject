@@ -25,7 +25,7 @@ export class ForgotComponent {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
     if (this.forgotForm.invalid) return;
-    this.http.post('http://localhost:3000/api/auth/reset-password',this.forgotForm.value, { headers }).subscribe({
+    this.http.post('https://backend-bla-bla.onrender.com/api/auth/reset-password',this.forgotForm.value, { headers }).subscribe({
         next: () => alert('Reset link sent to your email'),
         error: (err) => alert(err.error.message || 'Error occurred')
       });

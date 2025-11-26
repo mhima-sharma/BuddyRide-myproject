@@ -23,7 +23,7 @@ export class LoginComponent {
     if (this.loginForm.invalid) return;
 
     this.http.
-    post('http://localhost:3000/api/auth/login', this.loginForm.value)
+    post('https://backend-bla-bla.onrender.com/api/auth/login', this.loginForm.value)
     .subscribe({
       next: (res: any) => {
         alert('Login successful!');

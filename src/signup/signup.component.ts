@@ -26,7 +26,7 @@ export class SignupComponent {
     if (this.signupForm.invalid) return;
   
     this.http
-      .post('http://localhost:3000/api/auth/signup', this.signupForm.value)
+      .post('https://backend-bla-bla.onrender.com/api/auth/signup', this.signupForm.value)
       .subscribe({
         next: (res: any) => {
           // Save token and user to localStorage

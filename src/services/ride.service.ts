@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RideService {
-  private apiUrl = 'http://localhost:3000/api'; // Base API URL
+  private apiUrl = 'https://backend-bla-bla.onrender.com/api'; // Base API URL
 
   constructor(private http: HttpClient) {}
 

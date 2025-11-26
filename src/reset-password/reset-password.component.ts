@@ -41,7 +41,7 @@ export class ResetPasswordComponent {
   //   if (this.resetForm.invalid || !this.token) return;
 
   //   const { newPassword } = this.resetForm.value;
-  //   this.http.post('http://localhost:3000/auth/reset-password', {
+  //   this.http.post('https://backend-bla-bla.onrender.com/auth/reset-password', {
   //     token: this.token,
   //     newPassword: newPassword
   //   }).subscribe({

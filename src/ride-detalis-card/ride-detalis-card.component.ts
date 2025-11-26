@@ -33,7 +33,7 @@ rideId: any;
     const token = localStorage.getItem('authToken');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    this.http.get<any>('http://localhost:3000/api/auth/user/updated/profile', { headers }).subscribe({
+    this.http.get<any>('https://backend-bla-bla.onrender.com/api/auth/user/updated/profile', { headers }).subscribe({
       next: data => {
         console.log("what",data)
         this.user=data;
@@ -62,7 +62,7 @@ rideId: any;
       driverId:driverId
     };
   
-    this.http.post('http://localhost:3000/api/ride-requests/create', body, { headers }).subscribe(
+    this.http.post('https://backend-bla-bla.onrender.com/api/ride-requests/create', body, { headers }).subscribe(
       res => {
         alert('Ride request sent to driver.');
       },

@@ -164,7 +164,7 @@ initAutocomplete(inputElement: any, type: 'pickup' | 'dropoff') {
       'Content-Type': 'application/json'
     });
 
-    this.http.post('http://localhost:3000/api/ride/publish', data, { headers })
+    this.http.post('https://backend-bla-bla.onrender.com/api/ride/publish', data, { headers })
       .subscribe({
         next: (res: any) => {
           console.log('Ride published successfully', res);
