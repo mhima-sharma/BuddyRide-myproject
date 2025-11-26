@@ -8,12 +8,14 @@ import {Component,
   AfterViewInit} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HeaderComponent } from "../header/header.component";
+import { FooterComponent } from "../footer/footer.component";
 declare var google: any;
 
 @Component({
   selector: 'app-pickup-location',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule, HeaderComponent, FooterComponent],
   templateUrl: './pickup-location.component.html',
   styleUrls: ['./pickup-location.component.css']
 })
