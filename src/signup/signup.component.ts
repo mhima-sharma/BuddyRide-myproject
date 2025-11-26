@@ -33,8 +33,8 @@ export class SignupComponent {
           localStorage.setItem('authToken', res.token);
           localStorage.setItem('user', JSON.stringify(res.user));
   
-          alert(res.message); // Show success
-          console.log('Signup success!', res);
+          // alert(res.message); // Show success
+          // console.log('Signup success!', res);
   
           // Navigate to dashboard or login
           this.router.navigate(['/login']);

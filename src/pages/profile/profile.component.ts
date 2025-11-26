@@ -91,7 +91,9 @@ import { FooterComponent } from "../../footer/footer.component";
 })
 export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
-  user:any;
+  // user:any;
+user: any = null; // replace with your User type
+  editing: Record<string, boolean> = {};
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.profileForm = this.fb.group({

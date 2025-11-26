@@ -8,11 +8,13 @@ import {  Component,
   AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HeaderComponent } from "../header/header.component";
+import { FooterComponent } from "../footer/footer.component";
 declare const google: any;
 
 @Component({
   selector: 'app-publishride-time',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, HeaderComponent, FooterComponent],
   templateUrl: './publishride-time.component.html',
   styleUrl: './publishride-time.component.css'
 })

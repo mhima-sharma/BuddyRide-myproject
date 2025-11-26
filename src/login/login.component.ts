@@ -26,7 +26,7 @@ export class LoginComponent {
     post('https://backend-bla-bla.onrender.com/api/auth/login', this.loginForm.value)
     .subscribe({
       next: (res: any) => {
-        alert('Login successful!');
+        // alert('Login successful!');
         // Optional: store token or redirect
         this.router.navigate(['/home']);
 

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { RideService } from '../services/ride.service';
 import { CommonModule } from '@angular/common';
+import { HeaderComponent } from "../header/header.component";
+import { FooterComponent } from "../footer/footer.component";
 
 @Component({
   selector: 'app-user-rides',
-  imports: [CommonModule],
+  imports: [CommonModule, HeaderComponent, FooterComponent],
   templateUrl: './user-rides.component.html',
   styleUrl: './user-rides.component.css'
 })

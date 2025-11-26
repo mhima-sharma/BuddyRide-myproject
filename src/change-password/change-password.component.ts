@@ -37,7 +37,7 @@ export class ChangePasswordComponent {
 
     this.authService.changePassword({ currentPassword, newPassword }).subscribe({
       
-      next: () => alert("Password changed successfully!"),
+      // next: () => alert("Password changed successfully!"),
       error: () => alert("Failed to change password. Check current password.")
     });
   }
