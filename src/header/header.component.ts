@@ -44,7 +44,7 @@ handleFileInput(event: any, controlName: string): void {
 
 logout() {
   // localStorage.clear(); 
-    localStorage.removeItem('token'); // or sessionStorage.removeItem('token');
+  localStorage.removeItem('token'); // or sessionStorage.removeItem('token');
    
   
   this.router.navigate(['/logout']);
