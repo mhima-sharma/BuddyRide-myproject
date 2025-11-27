@@ -1,6 +1,95 @@
 <app-header></app-header>
 <div class="pt-20 pb-20">
-<form [formGroup]="profileForm" (ngSubmit)="updateProfile()" class="max-w-3xl mx-auto p-6 bg-white shadow-2xl rounded-2xl space-y-8">
+  <!-- ⭐ Show Friendly Message for New Users ⭐ -->
+<div *ngIf="!otheData " class="max-w-3xl mx-auto mt-5">
+  <div class="bg-orange-50 border border-orange-200 rounded-2xl p-6 text-center shadow-sm">
+
+    <div class="text-5xl mb-2 animate-bounce">🌱</div>
+
+    <h2 class="text-xl font-bold text-orange-700">
+      Complete your profile to get verified!
+    </h2>
+
+     <p class="text-gray-600 mt-1 text-sm">
+      Hi<b> {{ user?.name || 'user'}} </b>, we only have your <b> {{ user?.email || 'email' }} </b> right now.  
+      Add your details to improve trust, verification, and better ride experience.
+    </p>
+
+    <button (click)="toggleForm()"
+      class="mt-4 bg-orange-600 text-white px-6 py-2 rounded-xl font-semibold hover:bg-orange-700 transition">
+      ➕ Add Details & Get Verified
+    </button>
+
+  </div>
+</div>
+<!-- profile card  -->
+<div  *ngIf="otheData " class="max-w-3xl mx-auto bg-white shadow-2xl rounded-2xl p-8 border border-gray-200 mt-10 mb-5">
+
+  <!-- Top Section -->
+  <div class="flex items-center space-x-6">
+    <div class="h-24 w-24 rounded-full bg-gradient-to-br from-orange-500 to-yellow-400 
+                flex items-center justify-center text-4xl shadow-lg text-white">
+      <div class="animate-bounce text-3xl">💐</div>
+    </div>
+
+    <div>
+      <h2 class="text-3xl font-bold text-gray-800">{{ user?.name || 'User Name' }}</h2>
+      <p class="text-gray-500 text-sm">{{ otheData?.about || 'No bio available' }}</p>
+    </div>
+  </div>
+
+  <hr class="my-6 border-gray-300">
+
+  <!-- Info Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-sm text-gray-700">
+
+    <div class="p-4 bg-gray-50 rounded-xl shadow-sm">
+      <span class="font-semibold text-gray-900">📧 Email:</span>
+      <p>{{ otheData?.email }}</p>
+    </div>
+
+    <div class="p-4 bg-gray-50 rounded-xl shadow-sm">
+      <span class="font-semibold text-gray-900">📞 Phone:</span>
+      <p>{{ otheData?.phone }}</p>
+    </div>
+
+    <div class="p-4 bg-gray-50 rounded-xl shadow-sm">
+      <span class="font-semibold text-gray-900">📍 Address:</span>
+      <p>{{ otheData?.address }}</p>
+    </div>
+
+    <div class="p-4 bg-gray-50 rounded-xl shadow-sm">
+      <span class="font-semibold text-gray-900">🎂 DOB:</span>
+      <p>{{ otheData?.dob }}</p>
+    </div>
+
+    <div class="p-4 bg-gray-50 rounded-xl shadow-sm">
+      <span class="font-semibold text-gray-900">🚹 Gender:</span>
+      <p>{{ otheData?.gender }}</p>
+    </div>
+
+    <div class="p-4 bg-gray-50 rounded-xl shadow-sm">
+      <span class="font-semibold text-gray-900">👥 Role:</span>
+      <p>{{ otheData?.role }}</p>
+    </div>
+
+    <div class="p-4 bg-gray-50 rounded-xl shadow-sm md:col-span-2">
+      <span class="font-semibold text-gray-900">🚗 Vehicle:</span>
+      <p>{{ otheData?.vehicles }}</p>
+    </div>
+
+  </div>
+
+  <!-- ⭐ Edit Profile Button ⭐ -->
+  <div class="text-center mt-6">
+    <button (click)="toggleForm()" class="bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-xl transition duration-300">
+      ✏️ Edit Profile
+    </button>
+  </div>
+
+</div>
+<div *ngIf="showForm">
+  <form [formGroup]="profileForm" (ngSubmit)="updateProfile()" class="max-w-3xl mx-auto p-6 bg-white shadow-2xl rounded-2xl space-y-8">
   <!-- Profile Header -->
   <div class="flex items-center space-x-6">
     <!-- upload photo  -->
@@ -21,7 +110,7 @@
     
     
     <div>
-      <h2 class="text-2xl font-bold text-orange-600">{{ user?.name || 'Welcome Back!' }}</h2>
+      <h2 class="text-2xl font-bold text-orange-600"> Hii, {{ user?.name || 'Welcome Back!' }}</h2>
       <p class="text-gray-500 text-sm">About: {{ user?.about || 'Manage your profile information' }}</p>
     </div>
   </div>
@@ -30,15 +119,16 @@
   <div>
     <h3 class="text-lg font-semibold text-gray-700 mb-2">📞 Contact Information</h3>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <input type="email" placeholder="Email" formControlName="email" class="input w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
+      
+      <input type="email" placeholder="Email required" formControlName="email" class="input w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
       focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200" />
       <div class="flex space-x-2">
-        <input type="text" placeholder="Phone" formControlName="phone" class="input flex-grow  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
+        <input type="text" placeholder="Phone required" formControlName="phone" class="input flex-grow  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
         focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200" />
         <!-- <button type="button" class="text-sm text-blue-600 hover:underline">Verify OTP</button> -->
       </div>
     </div>
-    <input type="text" placeholder="Address" formControlName="address" class="input mt-4  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
+    <input type="text" placeholder="Address required" formControlName="address" class="input mt-4  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
     focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200" />
   </div>
 
@@ -46,12 +136,12 @@
   <div>
     <h3 class="text-lg font-semibold text-gray-700 mb-2">👤 Basic Information</h3>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <input type="date" formControlName="dob" class="input  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
+      <input type="date" formControlName="dob" placeholder="date of birth required" class="input  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
       focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200" />
-      <input type="text" formControlName="role" placeholder="Driver/Rider" class="input  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
+      <input type="text" formControlName="role" placeholder="User type Driver/Rider required" class="input  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
       focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200" />
     </div>
-    <input type="text" formControlName="gender" placeholder="male/female" class="input  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
+    <input type="text" formControlName="gender" placeholder="gender required" class="input  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
     focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200
  mt-4" />
   </div>
@@ -59,7 +149,7 @@
   <!-- Vehicles -->
   <div>
     <h3 class="text-lg font-semibold text-gray-700 mb-2">🚗 Vehicle Information</h3>
-    <input type="text" formControlName="vehicles" placeholder="Vehicles with color (e.g., Red Honda Civic)" class="input  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
+    <input type="text" formControlName="vehicles" placeholder="Vehicles with color if you are driver" class="input  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
     focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200
 " />
   </div>
@@ -67,7 +157,7 @@
   <!-- Identity Verification -->
   <div>
     <h3 class="text-lg font-semibold text-gray-700 mb-2">🔒 Identity Verification</h3>
-    <input type="text" formControlName="addhar" placeholder="Aadhar / ID Number" class="input  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
+    <input type="text" formControlName="addhar" placeholder="Aadhar / ID Number required" class="input  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
     focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200
  mb-2" />
     <input type="file" (change)="handleFileInput($event, 'addhar')" class="input  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
@@ -75,7 +165,10 @@
  mb-4" />
     <input type="text" formControlName="License" placeholder="Driving License Number" class="input  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
     focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200 mb-2" />
-    <input type="file" (change)="handleFileInput($event, 'License')" class="input w-full" />
+    <!-- <input type="file" (change)="handleFileInput($event, 'License')" class="input w-full" /> -->
+    <input type="file" (change)="handleFileInput($event, 'License')" class="input  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
+    focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200
+ mb-4" />
   </div>
 
   <!-- Email Verification Status -->
@@ -83,13 +176,25 @@
     <input type="text" formControlName="emailverify" readonly value="Email Verified" class="input  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
     focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200  font-semibold" />
   </div> -->
-
+    <p *ngIf="profileForm.invalid" class="text-red-400 text-center">
+    Please fill all the required fields
+  </p>
   <!-- Submit Button -->
   <div class="text-center">
-    <button type="submit" class="bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-xl transition duration-300">
+    <button type="submit" [disabled]="profileForm.invalid" class="bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-xl transition duration-300 disabled:bg-orange-300
+    disabled:text-white/70
+    disabled:cursor-not-allowed
+    disabled:hover:bg-orange-300">
       ✏️ Update Profile
     </button>
   </div>
 </form>
+
+
+
 </div>
+
+</div>
+
 <app-footer></app-footer>
+

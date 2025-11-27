@@ -20,10 +20,13 @@
       placeholder="Type your complaint here..."></textarea>
 
     <!-- Button -->
-    <button (click)="sendMessage()"
+    <button routerLink="/home" (click)="sendMessage()"
       class="mt-4 bg-gradient-to-r from-orange-600 to-orange-500 text-white font-semibold py-3 rounded-xl w-full shadow-lg hover:shadow-orange-400/60 hover:from-orange-700 hover:to-orange-600 transition-all duration-300">
       📤 Send Complaint
     </button>
+    <p *ngIf="successMessage" class="mt-4 text-green-600 font-semibold text-center">
+        {{ successMessage }}
+    </p>
   </div>
 </div>
 

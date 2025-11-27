@@ -94,21 +94,28 @@ export class ProfileComponent implements OnInit {
   // user:any;
 user: any = null; // replace with your User type
   editing: Record<string, boolean> = {};
+  // profile.component.ts
+showForm = false;
+
+toggleForm() {
+  this.showForm = !this.showForm;
+}
+
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.profileForm = this.fb.group({
       name:[''],
       email: ['', Validators.required],
       about: [''],
-      phone: [''],
-      address: [''],
+      phone: ['',[Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+      address: ['',Validators.required],
       website: [''],
-      dob: [''],
-      gender: [''],
-      role: [''],
+      dob: ['' ,Validators.required],
+      gender: ['' ,Validators.required],
+      role: ['' ,Validators.required],
       vehicles: [''],
       emailverify: [''],
-      addhar: [null],   // For file input
+      addhar: [null ,Validators.required],   // For file input
       License: [null]   // For file input
     });
   }
@@ -126,6 +133,7 @@ user: any = null; // replace with your User type
       }
     });
     this.updatedProfile()
+    this.loadProfile();
   }
 
 
@@ -143,6 +151,8 @@ user: any = null; // replace with your User type
 
     this.http.get<any>('https://backend-bla-bla.onrender.com/api/auth/user/updated/profile', { headers }).subscribe({
       next: data => {
+        this.otheData=data;
+        console.log("updated data",data)
         this.profileForm.patchValue(data);
       },
       error: err => {
@@ -195,4 +205,55 @@ user: any = null; // replace with your User type
       }
     });
   }
+
+
+
+
+  // getting details in card of user profile 
+  otheData:any
+  private loadProfile(): void {
+  const token = localStorage.getItem('authToken');
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+  this.http.get<any>('https://backend-bla-bla.onrender.com/api/auth/user/profile', { headers })
+    .subscribe({
+      next: raw => {
+        console.log('profile GET raw response:', raw);
+
+        // Try common wrapper shapes
+        const data = raw?.payload ?? raw?.data ?? raw?.user ?? raw;
+
+        // Defensive guard: if still falsy, keep raw so console shows something
+        this.user = data || raw;
+console.log('Parsed user profile data:', data);
+        // Map backend field names to your form controls
+        const mapped = {
+          name: this.user?.name ?? this.user?.username ?? '',
+          email: this.user?.email ?? '',
+          about: this.user?.about ?? '',
+          phone: this.user?.phone ?? '',
+          address: this.user?.address ?? '',
+          // dob: this.formatDateForInput(this.user?.dob ?? this.user?.date_of_birth ?? this.user?.created_at),
+          gender: this.user?.gender ?? '',
+          role: this.user?.role ?? this.user?.Role ?? '',
+          vehicles: this.user?.vehicles ?? this.user?.Vehicles ?? '',
+          aadharNumber: this.user?.aadhar_number ?? this.user?.addhar ?? '',
+          drivingLicenseNumber: this.user?.driving_license_number ?? this.user?.license ?? ''
+        };
+
+        this.profileForm.patchValue(mapped);
+
+        // store user in localStorage if you want to reuse later (optional)
+        try {
+          localStorage.setItem('user', JSON.stringify(this.user));
+        } catch (e) {
+          // ignore storage error
+        }
+      },
+      error: err => {
+        console.error('Failed to load profile:', err);
+      }
+    });
+}
+
 }
