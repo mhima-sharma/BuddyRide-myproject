@@ -22,20 +22,35 @@ export class PublishrideCalanderComponent implements OnInit {
     this.generateMonths();
   }
 
+  // generateMonths() {
+  //   const today = new Date();
+  //   const startYear = today.getMonth() >= 3 ? today.getFullYear() : today.getFullYear() - 1;
+  //   const startDate = new Date(startYear, 3, 1); // April 1st
+  //   const endDate = new Date(startYear + 1, 4, 0); // April 30 next year
+
+  //   let current = new Date(startDate);
+  //   this.months = [];
+
+  //   while (current <= endDate) {
+  //     this.months.push(new Date(current));
+  //     current.setMonth(current.getMonth() + 1);
+  //   }
+  // }
+
+
   generateMonths() {
-    const today = new Date();
-    const startYear = today.getMonth() >= 3 ? today.getFullYear() : today.getFullYear() - 1;
-    const startDate = new Date(startYear, 3, 1); // April 1st
-    const endDate = new Date(startYear + 1, 4, 0); // April 30 next year
+  this.months = [];
 
-    let current = new Date(startDate);
-    this.months = [];
+  const today = new Date();
+  const startMonth = new Date(today.getFullYear(), today.getMonth(), 1);
 
-    while (current <= endDate) {
-      this.months.push(new Date(current));
-      current.setMonth(current.getMonth() + 1);
-    }
+  for (let i = 0; i < 12; i++) {
+    this.months.push(
+      new Date(startMonth.getFullYear(), startMonth.getMonth() + i, 1)
+    );
   }
+}
+
 
   getDaysInMonth(month: Date): Date[] {
     const year = month.getFullYear();

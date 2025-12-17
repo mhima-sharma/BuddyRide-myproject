@@ -1,33 +1,55 @@
 <app-header></app-header>
-<div class="p-4">
-  <p class="text-4xl text-center text-orange-700 mb-6 font-bold">
+
+<div class="max-w-7xl mx-auto p-4 pt-15">
+  <p class="text-4xl text-center text-orange-700 mb-10 font-bold">
     When are you going?
   </p>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <div *ngFor="let month of months">
-      <h2 class="text-xl font-semibold mb-2 text-center">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div
+      *ngFor="let month of months"
+      class="bg-white rounded-2xl shadow-md p-5 hover:shadow-lg transition"
+    >
+      <!-- Month Title -->
+      <h2 class="text-xl font-semibold mb-4 text-center text-gray-800">
         {{ month.toLocaleString('default', { month: 'long', year: 'numeric' }) }}
       </h2>
 
-      <div class="grid grid-cols-7 gap-1">
-        <div *ngFor="let day of getDaysInMonth(month)"
-             (click)="toggleDateSelection(day)"
-             [ngClass]="{
-               'bg-blue-500 text-white': isSelected(day),
-               'bg-gray-100': !isSelected(day)
-             }"
-             class="cursor-pointer text-center p-2 rounded hover:bg-blue-300 transition">
+      <!-- Weekday Header -->
+      <div class="grid grid-cols-7 text-xs text-gray-500 text-center mb-2">
+        <div *ngFor="let day of ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']">
+          {{ day }}
+        </div>
+      </div>
+
+      <!-- Calendar Days -->
+      <div class="grid grid-cols-7 gap-2">
+        <div
+          *ngFor="let day of getDaysInMonth(month)"
+          (click)="toggleDateSelection(day)"
+          class="h-10 flex items-center justify-center rounded-lg cursor-pointer text-sm font-medium
+                 transition-all duration-200 select-none"
+          [ngClass]="{
+            'bg-blue-600 text-white scale-105 shadow-md': isSelected(day),
+            'bg-gray-100 text-gray-700 hover:bg-blue-100 hover:text-blue-700': !isSelected(day)
+          }"
+        >
           {{ day.getDate() }}
         </div>
       </div>
     </div>
   </div>
 
-  <button
-    (click)="publishRides()"
-    class="mt-6 bg-green-600 hover:bg-green-700 text-white font-medium px-6 py-3 rounded shadow">
-    Publish Selected Rides
-  </button>
+  <!-- Action Button -->
+  <div class="flex justify-center">
+    <button
+      (click)="publishRides()"
+      class="mt-10 bg-green-600 hover:bg-green-700 active:scale-95
+             text-white font-semibold px-10 py-3 rounded-xl shadow-lg transition"
+    >
+      Publish Selected Rides
+    </button>
+  </div>
 </div>
+
 <app-footer></app-footer>
