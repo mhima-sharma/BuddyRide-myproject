@@ -1,27 +1,69 @@
 <app-header></app-header>
-<!-- ride-card.component.html -->
+
 <div class="p-20">
-<h1 class="text-3xl font-bold text-center text-orange-700 mb-5">"Would you like to proceed with booking this ride?"</h1>
-<div class="card driver-card"  >
-  <div class="driver-header">
-    <div class="icon">👤</div>
-    <div>
-      <!-- <div class="driver-name">{{ user.name || 'Mahima' }}</div> -->
-      <div class="rating">⭐ 3/5 - 1 rating</div>
-    </div>
-  </div>
-  <div class="instant"><p>✅ Verified Profile</p>
-      <p class="note">⛔ Rarely cancels rides</p>
-      <p>⌛ Your booking won't be confirmed until the driver approves your request</p>
-      <p class="note">🚭 No smoking, please</p>
-      <p class="note">🚫 No Drinking, please</p>
-      <!-- <p >📞 {{ user.phone }}</p>
-      <p >✉️{{ user.email }}</p>
-      <p>🚗 {{ user.vehicles}}</p> -->
+  <h1 class="text-3xl font-bold text-center text-orange-700 mb-5">
+    Would you like to proceed with booking this ride?
+  </h1>
+
+  <div class="card driver-card" *ngIf="ride">
+
+    <!-- DRIVER HEADER -->
+    <div class="driver-header">
+      <div class="icon">👤</div>
+      <div>
+        <div class="driver-name">
+          {{ ride?.publisher_name || 'Ride Publisher' }}
+        </div>
+        <div class="rating">⭐ 3/5 • 1 rating</div>
+      </div>
     </div>
 
-  
+    <!-- DRIVER / RIDE INFO -->
+    <div class="instant">
+      <p>✅ Verified Profile</p>
+      <p class="note">⛔ Rarely cancels rides</p>
+      <p>⌛ Booking will be confirmed after driver approval</p>
+      <p class="note">🚭 No smoking</p>
+      <p class="note">🚫 No drinking</p>
+
+      <hr class="my-3" />
+
+      <p>
+        📍 <strong>Route:</strong>
+        {{ ride?.from_location }} → {{ ride?.to_location }}
+      </p>
+
+      <p>
+        🗓 <strong>Date:</strong>
+        {{ ride?.date | date:'dd MMM yyyy' }}
+      </p>
+
+      <p>
+        ⏰ <strong>Time:</strong>
+        {{ ride?.time }}
+      </p>
+
+      <p>
+        🪑 <strong>Seats Available:</strong>
+        {{ ride?.passengers }}
+      </p>
+
+      <hr class="my-3" />
+
+      <p>📞 {{ ride?.publisher_phone || 'Not available' }}</p>
+      <p>✉️ {{ ride?.publisher_email }}</p>
+      <p>🚗 {{ ride?.publisher_vehicle || 'Vehicle not specified' }}</p>
+    </div>
+
+  </div>
+
+  <button
+    (click)="requestRide()"
+    class="contact-btn mt-5"
+    *ngIf="ride"
+  >
+    Request to Book This Ride
+  </button>
 </div>
-<button  (click)="requestRide()" class="contact-btn">Request to Book This Ride</button>
-</div>
+
 <app-footer></app-footer>

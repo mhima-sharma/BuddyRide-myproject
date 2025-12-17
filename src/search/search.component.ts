@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RideService } from '../services/ride.service';
 import { CommonModule } from '@angular/common';
@@ -14,7 +14,7 @@ declare const google: any;
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
-export class SearchComponent {
+export class SearchComponent implements AfterViewInit {
   selectedDate: Date | null = null;
   passengerCount = 1;
   from = '';
@@ -24,9 +24,6 @@ export class SearchComponent {
   rides: any[] = [];
   isLoading: boolean = false;
   isSearching = false;
-  
-
-  constructor(private rideService: RideService, private http: HttpClient) {}
 
   @ViewChild('fromInput') fromInput!: ElementRef;
   @ViewChild('toInput') toInput!: ElementRef;
@@ -37,7 +34,10 @@ export class SearchComponent {
     date: new Date().toISOString().split('T')[0],
   };
 
+  constructor(private rideService: RideService, private http: HttpClient) {}
+
   ngAfterViewInit(): void {
+    // Google Places Autocomplete for 'from'
     const fromAutocomplete = new google.maps.places.Autocomplete(
       this.fromInput.nativeElement,
       { types: ['geocode'] }
@@ -46,9 +46,10 @@ export class SearchComponent {
       const place = fromAutocomplete.getPlace();
       const address = place?.formatted_address || '';
       this.selectedRide.from = address;
-      this.from = address; // ✅ Sync with this.from
+      this.from = address;
     });
 
+    // Google Places Autocomplete for 'to'
     const toAutocomplete = new google.maps.places.Autocomplete(
       this.toInput.nativeElement,
       { types: ['geocode'] }
@@ -57,7 +58,7 @@ export class SearchComponent {
       const place = toAutocomplete.getPlace();
       const address = place?.formatted_address || '';
       this.selectedRide.to = address;
-      this.to = address; // ✅ Sync with this.to
+      this.to = address;
     });
   }
 
@@ -79,13 +80,8 @@ export class SearchComponent {
 
     const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(trimmedQuery)}`;
     this.http.get<any[]>(url).subscribe(
-      (res) => {
-        if (field === 'from') this.fromResults = res;
-        else this.toResults = res;
-      },
-      (err) => {
-        console.error(`Error searching ${field} location:`, err);
-      }
+      res => field === 'from' ? this.fromResults = res : this.toResults = res,
+      err => console.error(`Error searching ${field} location:`, err)
     );
   }
 
@@ -105,27 +101,27 @@ export class SearchComponent {
       alert('Please select both departure and destination locations.');
       return;
     }
-  
+
     const searchData = {
       from: this.from,
       to: this.to,
-      date: this.selectedDate ? this.selectedDate.toString().split('T')[0] : null,
-      passengers: this.passengerCount,
+      date: this.selectedDate ? this.selectedDate.toISOString().split('T')[0] : null,
+      passengers: this.passengerCount
     };
-  
+
     this.isSearching = true;
-  
+
     this.rideService.searchRides(searchData.from, searchData.to, searchData.date, searchData.passengers)
       .subscribe(
-        (res) => {
-          // Ensure loader is shown for at least 2 seconds
+        res => {
           setTimeout(() => {
             this.rides = res;
+            this.rideService.setRides(res); // ✅ Store rides in shared service for frontend filtering
             console.log('Found rides:', res);
             this.isSearching = false;
-          }, 2000);
+          }, 2000); // minimum loader time
         },
-        (err) => {
+        err => {
           console.error('Error fetching rides:', err);
           this.isSearching = false;
           alert('Something went wrong while searching for rides.');
@@ -133,14 +129,17 @@ export class SearchComponent {
       );
   }
 
-  //get ride details
- 
-  openRideDetailModal(user: any, rideId: number) {
-    console.log("hhhhhiiiiiiiii")
-    console.log(user,rideId,"user")
-    let driverId=user.user_id
-    let emailId=user.email
-    window.location.href=`http://localhost:4200/ride-detail?rideId=${rideId}&driverId=${driverId}&emailId=${emailId}`;
-  }
- 
-}  
+  // openRideDetailModal(ride: any) {
+  //   const rideId = ride.ride_id;
+  //   const driverId = ride.publisher_id;
+  //   const emailId = ride.publisher_email;
+
+  //   // Navigate to ride-detail page with query params
+  //   window.location.href = `http://localhost:4200/ride-detail?rideId=${rideId}&driverId=${driverId}&emailId=${emailId}`;
+  // }
+  openRideDetailModal(ride: any) {
+  localStorage.setItem('cachedRides', JSON.stringify(this.rides));
+  window.location.href = `http://localhost:4200/ride-detail?rideId=${ride.ride_id}&driverId=${ride.publisher_id}&emailId=${ride.publisher_email}`;
+}
+
+}

@@ -110,8 +110,9 @@
 
 
     -->
+<!-- SEARCH BAR -->
 <div class="flex flex-col sm:flex-row flex-wrap bg-white h-auto px-2 py-2 w-full mx-auto items-center space-y-2 sm:space-y-0 sm:space-x-2">
-  
+
   <!-- FROM -->
   <div class="flex items-center gap-2 px-3 py-2 flex-1 w-full border border-gray-200 rounded-md">
     <span class="text-gray-500 text-lg">🧭</span>
@@ -146,19 +147,26 @@
 
   <!-- PASSENGER -->
   <div class="flex items-center gap-2 px-3 py-2 flex-1 w-full border border-gray-200 rounded-md">
-    <button class="w-8 h-8 flex items-center justify-center border border-gray-300 text-xl text-gray-400 disabled:opacity-30"
-      (click)="decrease()" [disabled]="passengerCount <= 1">
+    <button
+      class="w-8 h-8 flex items-center justify-center border border-gray-300 text-xl text-gray-400 disabled:opacity-30"
+      (click)="decrease()"
+      [disabled]="passengerCount <= 1"
+    >
       &minus;
     </button>
+
     <span class="text-gray-800 font-medium text-sm">{{ passengerCount }}</span>
-    <button class="w-8 h-8 flex items-center justify-center border border-blue-500 text-blue-500 text-xl hover:bg-blue-50 transition"
-      (click)="increase()">
+
+    <button
+      class="w-8 h-8 flex items-center justify-center border border-blue-500 text-blue-500 text-xl hover:bg-blue-50 transition"
+      (click)="increase()"
+    >
       &#43;
     </button>
   </div>
 
   <!-- SEARCH BUTTON -->
-   <button
+  <button
     (click)="searchRides()"
     class="bg-sky-500 hover:bg-sky-600 text-white font-semibold px-6 py-2 rounded-md text-sm transition self-start sm:self-auto"
   >
@@ -166,45 +174,58 @@
   </button>
 </div>
 
-<!-- Loader while searching -->
+<!-- LOADER -->
 <div *ngIf="isSearching" class="flex justify-center items-center min-h-[200px] mt-4 w-full">
-  <img src="../assets/images/original-a13912f45623da52a215e6a1def2aac3.gif" alt="Searching..." class="w-30 h-24" />
+  <img
+    src="../assets/images/original-a13912f45623da52a215e6a1def2aac3.gif"
+    alt="Searching..."
+    class="w-30 h-24"
+  />
 </div>
 
-<!-- Available Rides List -->
-<div *ngIf="!isSearching && rides.length==0"  class="mt-6 w-full max-w-6xl mx-auto px-4" >
-  <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">🚗 Available Rides</h2>
+<!-- AVAILABLE RIDES -->
+<div *ngIf="!isSearching && rides.length > 0" class="mt-6 w-full max-w-6xl mx-auto px-4">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+    🚗 Available Rides
+  </h2>
 
   <div
     *ngFor="let ride of rides"
-    (click)="openRideDetailModal(ride, ride.id)"
+   (click)="openRideDetailModal(ride)"
     class="p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-200 mb-6 border border-gray-100 cursor-pointer w-full"
   >
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700">
+
       <div>
         <p class="text-sm font-medium text-gray-500">From</p>
         <p class="text-lg font-semibold">{{ ride.from_location }}</p>
       </div>
+
       <div>
         <p class="text-sm font-medium text-gray-500">To</p>
         <p class="text-lg font-semibold">{{ ride.to_location }}</p>
       </div>
+
       <div>
         <p class="text-sm font-medium text-gray-500">Date and Time</p>
         <p class="text-lg">
-          <span class="font-bold">Date: </span> {{ ride.date | date: 'mediumDate' }} 
-          <span class="font-bold">Time: </span> {{ ride.time }}
+          <span class="font-bold">Date:</span>
+          {{ ride.date | date: 'mediumDate' }}
+          <span class="font-bold ml-2">Time:</span>
+          {{ ride.time }}
         </p>
       </div>
+
       <div>
         <p class="text-sm font-medium text-gray-500">Seats Available</p>
-        <p class="text-lg">{{ ride.passengers }}</p>
+        <p class="text-lg font-semibold">{{ ride.passengers }}</p>
       </div>
+
     </div>
   </div>
 </div>
 
-<!-- No rides found -->
+<!-- NO RIDES FOUND -->
 <div *ngIf="!isSearching && rides.length === 0" class="text-center text-gray-500 mt-10 w-full">
   <p>No rides available. Try changing your filters.</p>
 </div>
