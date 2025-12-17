@@ -13,7 +13,7 @@ import { RideService } from '../services/ride.service';
   imports: [HeaderComponent, FooterComponent, CommonModule, FormsModule],
   templateUrl: './ride-detalis-card.component.html',
   styleUrls: ['./ride-detalis-card.component.css']
-})
+})  
 export class RideDetalisCardComponent implements OnInit {
   ride: any;
 
