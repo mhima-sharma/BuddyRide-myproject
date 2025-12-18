@@ -1,115 +1,3 @@
-<!-- <div class="flex flex-wrap bg-white rounded-full h-auto px-2 py-2 max-w-7xl mx-auto items-center shadow-md">
-  
-  <div class="flex items-center gap-2 px-3 py-2 flex-1 min-w-[150px]">
-    <span class="text-gray-500 text-lg">🧭</span>
-    <input
-      type="text"
-      [(ngModel)]="from"
-      placeholder="Leaving from"
-      class="bg-transparent outline-none text-sm text-gray-700 w-full"
-    />
-  </div>
-
-  <div class="border-l border-gray-200 h-5"></div>
-
- 
-  <div class="flex items-center gap-2 px-3 py-2 flex-1 min-w-[150px]">
-    <span class="text-gray-500 text-lg">📍</span>
-    <input
-      type="text"
-      [(ngModel)]="to"
-      placeholder="Going to"
-      class="bg-transparent outline-none text-sm text-gray-700 w-full"
-    />
-  </div>
-
-  <div class="border-l border-gray-200 h-5"></div>
-
-
-  <div class="flex items-center gap-2 px-3 py-2 min-w-[120px]">
-    <span class="text-gray-500 text-lg">📅</span>
-    <input
-      type="date"
-      [(ngModel)]="selectedDate"
-      class="bg-transparent outline-none text-sm text-gray-700"
-    />
-  </div>
-
-  <div class="border-l border-gray-200 h-5"></div>
-
-  
-  <div class="flex items-center gap-2 px-3 py-2 min-w-[120px]">
-  <div class="flex items-center gap-2 rounded-full px-4 py-2 w-full sm:w-auto">
-    <button class="w-8 h-8 flex items-center justify-center rounded-full border border-gray-300 text-xl text-gray-400 disabled:opacity-30"
-      (click)="decrease()" [disabled]="passengerCount <= 1">
-      &minus;
-    </button>
-    <span class="text-gray-800 font-medium text-sm">{{ passengerCount }}</span>
-
-    <button class="w-8 h-8 flex items-center justify-center rounded-full border border-blue-500 text-blue-500 text-xl hover:bg-blue-50 transition"
-      (click)="increase()">
-      &#43;
-    </button>
-  </div>
-  </div>
-
-  
-  <button
-    (click)="searchRides()"
-    class="bg-sky-500 hover:bg-sky-600 text-white font-semibold px-5 py-2 text-sm rounded-full transition ml-2"
-  >
-    Search
-  </button>
-  <button
-    (click)="searchRides()"
-    class="bg-sky-500 hover:bg-sky-600 text-white font-semibold px-7 h-full mt-2 py-3 rounded-r-full transition"
-  >
-    Search
-  </button>
-</div>
-
-
-<div *ngIf="isSearching" class="flex justify-center items-center min-h-[200px]">
-  <img src="../assets/images/original-a13912f45623da52a215e6a1def2aac3.gif" alt="Searching..." class="w-30 h-24" />
-</div>
-
-
-<div *ngIf="!isSearching && rides.length > 0" class="mt-6 w-full max-w-6xl mx-auto px-4">
-  <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">🚗 Available Rides</h2>
-
-  <div
-    *ngFor="let ride of rides"
-   (click)="openRideDetailModal(ride, ride.id)"
-    class="p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-200 mb-6 border border-gray-100"
-  >
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700">
-      <div>
-        <p class="text-sm font-medium text-gray-500">From</p>
-        <p class="text-lg font-semibold">{{ ride.from_location }}</p>
-      </div>
-      <div>
-        <p class="text-sm font-medium text-gray-500">To</p>
-        <p class="text-lg font-semibold">{{ ride.to_location }}</p>
-      </div>
-      <div>
-        <p class="text-sm font-medium text-gray-500">Date and Time</p>
-        <p class="text-lg"> <span class="font-bold">Date: </span> {{ ride.date | date: 'mediumDate' }} <span class="font-bold">Time:</span> {{ ride.time }}</p>
-      </div>
-      <div>
-        <p class="text-sm font-medium text-gray-500">Seats Available</p>
-        <p class="text-lg">{{ ride.passengers }}</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div *ngIf="!isSearching && rides.length === 0" class="text-center text-gray-500 mt-10">
-  <p>No rides available. Try changing your filters.</p>
-</div>
-
-
-    -->
 <!-- SEARCH BAR -->
 <div class="flex flex-col sm:flex-row flex-wrap bg-white h-auto px-2 py-2 w-full mx-auto items-center space-y-2 sm:space-y-0 sm:space-x-2">
 
@@ -117,6 +5,7 @@
   <div class="flex items-center gap-2 px-3 py-2 flex-1 w-full border border-gray-200 rounded-md">
     <span class="text-gray-500 text-lg">🧭</span>
     <input
+      #fromInput
       type="text"
       [(ngModel)]="from"
       placeholder="Leaving from"
@@ -128,6 +17,7 @@
   <div class="flex items-center gap-2 px-3 py-2 flex-1 w-full border border-gray-200 rounded-md">
     <span class="text-gray-500 text-lg">📍</span>
     <input
+      #toInput
       type="text"
       [(ngModel)]="to"
       placeholder="Going to"
@@ -167,6 +57,7 @@
 
   <!-- SEARCH BUTTON -->
   <button
+   type="button"
     (click)="searchRides()"
     class="bg-sky-500 hover:bg-sky-600 text-white font-semibold px-6 py-2 rounded-md text-sm transition self-start sm:self-auto"
   >
@@ -191,11 +82,10 @@
 
   <div
     *ngFor="let ride of rides"
-   (click)="openRideDetailModal(ride)"
+    (click)="openRideDetailModal(ride)"
     class="p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-200 mb-6 border border-gray-100 cursor-pointer w-full"
   >
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700">
-
       <div>
         <p class="text-sm font-medium text-gray-500">From</p>
         <p class="text-lg font-semibold">{{ ride.from_location }}</p>
@@ -220,7 +110,6 @@
         <p class="text-sm font-medium text-gray-500">Seats Available</p>
         <p class="text-lg font-semibold">{{ ride.passengers }}</p>
       </div>
-
     </div>
   </div>
 </div>
