@@ -143,6 +143,7 @@
         placeholder="Address *"
         formControlName="address"
         class="input mt-4 w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm"
+        
       />
     </div>
 
@@ -226,15 +227,23 @@
 
       <input
         type="text"
-        formControlName="addhar"
-        placeholder="Aadhar / ID Number *"
+        formControlName="addharnumber"
+        placeholder="Addhar / ID Number *"
         class="input w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm mb-2"
       />
+      <p
+        *ngIf="profileForm.get('addharnumber')?.touched && profileForm.get('addharnumber')?.invalid"
+        class="text-red-400 text-sm mt-1"
+      >
+        Enter valid addhar number
+      </p>
 
       <input
-        type="file"
+        type="file" 
+        formControlName="addhar"
         (change)="handleFileInput($event, 'addhar')"
         class="input w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm mb-4"
+       
       />
 
       <input

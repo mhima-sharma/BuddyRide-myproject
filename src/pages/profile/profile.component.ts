@@ -122,6 +122,7 @@ export class ProfileComponent implements OnInit {
       vehicles: [''],
       emailverify: [''],
       addhar: [null, Validators.required],
+      addharnumber: [null, Validators.required, Validators.pattern(/^[2-9]{1}[0-9]{11}$/)],
       License: [null]
     });
   }
