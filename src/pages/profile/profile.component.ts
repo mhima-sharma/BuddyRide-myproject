@@ -75,68 +75,86 @@
 //     });
 //   }
 // }
+
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { HeaderComponent } from "../../header/header.component";
-import { FooterComponent } from "../../footer/footer.component";
+import { HeaderComponent } from '../../header/header.component';
+import { FooterComponent } from '../../footer/footer.component';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, FormsModule, HeaderComponent, FooterComponent],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    FormsModule,
+    HeaderComponent,
+    FooterComponent
+  ],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
-  // user:any;
-user: any = null; // replace with your User type
-  editing: Record<string, boolean> = {};
-  // profile.component.ts
-showForm = false;
-
-toggleForm() {
-  this.showForm = !this.showForm;
-}
-
+  user: any = null;
+  showForm = false;
+  otheData: any;
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.profileForm = this.fb.group({
-      name:[''],
+      name: [''],
       email: ['', Validators.required],
       about: [''],
-      phone: ['',[Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
-      address: ['',Validators.required],
+      phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+      address: ['', Validators.required],
       website: [''],
-      dob: ['' ,Validators.required],
-      gender: ['' ,Validators.required],
-      role: ['' ,Validators.required],
+      dob: ['', [Validators.required, this.minAgeValidator(18)]],
+      gender: ['', Validators.required],
+      role: ['', Validators.required],
       vehicles: [''],
       emailverify: [''],
-      addhar: [null ,Validators.required],   // For file input
-      License: [null]   // For file input
+      addhar: [null, Validators.required],
+      License: [null]
     });
+  }
+  toggleForm(): void {
+    this.showForm = !this.showForm;
   }
 
   ngOnInit(): void {
-    const token = localStorage.getItem('authToken');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
-    this.http.get<any>('https://backend-bla-bla.onrender.com/api/auth/user/profile', { headers }).subscribe({
-      next: data => {
-        this.profileForm.patchValue(data);
-      },
-      error: err => {
-        console.error('Failed to load profile:', err);
-      }
-    });
-    this.updatedProfile()
     this.loadProfile();
+    this.updatedProfile();
   }
 
-
+  minAgeValidator(minAge: number) {
+    return (control: any) => {
+      if (!control.value) return null;
+  
+      const dob = new Date(control.value);
+      const today = new Date();
+  
+      let age = today.getFullYear() - dob.getFullYear();
+      const monthDiff = today.getMonth() - dob.getMonth();
+  
+      if (
+        monthDiff < 0 ||
+        (monthDiff === 0 && today.getDate() < dob.getDate())
+      ) {
+        age--;
+      }
+  
+      return age >= minAge ? null : { minAge: true };
+    };
+  }
+  
 
   handleFileInput(event: any, controlName: string): void {
     const file = event.target.files[0];
@@ -144,116 +162,103 @@ toggleForm() {
       this.profileForm.get(controlName)?.setValue(file);
     }
   }
-// for updated profile 
+
   updatedProfile(): void {
     const token = localStorage.getItem('authToken');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${token}`
+    );
 
-    this.http.get<any>('https://backend-bla-bla.onrender.com/api/auth/user/updated/profile', { headers }).subscribe({
-      next: data => {
-        this.otheData=data;
-        console.log("updated data",data)
-        this.profileForm.patchValue(data);
-      },
-      error: err => {
-        console.error('Failed to load profile:', err);
-      }
-    });
+    this.http
+      .get<any>(
+        'https://backend-bla-bla.onrender.com/api/auth/user/updated/profile',
+        { headers }
+      )
+      .subscribe({
+        next: data => {
+          this.otheData = data;
+          this.profileForm.patchValue(data);
+        },
+        error: err => console.error(err)
+      });
   }
-  
+
   updateProfile(): void {
+    if (this.profileForm.invalid) {
+      this.profileForm.markAllAsTouched();
+      return;
+    }
+
     const token = localStorage.getItem('authToken');
-    this.user = JSON.parse(localStorage.getItem('user') || '{}');  
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.user = JSON.parse(localStorage.getItem('user') || '{}');
+
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${token}`
+    );
 
     const formData = new FormData();
+
     if (this.user?.id) {
-      formData.append('userId', this.user.id); 
+      formData.append('userId', this.user.id);
     }
-    // Append form fields
+
     for (const key in this.profileForm.value) {
       if (
         key !== 'addhar' &&
         key !== 'License' &&
-        this.profileForm.value[key] !== null &&
-        this.profileForm.value[key] !== ''
+        this.profileForm.value[key]
       ) {
         formData.append(key, this.profileForm.value[key]);
       }
     }
 
-    // Append files
-    const aadharFile = this.profileForm.get('addhar')?.value;
-    const licenseFile = this.profileForm.get('License')?.value;
-
-    if (aadharFile instanceof File) {
-      formData.append('aadharFile', aadharFile);
+    if (this.profileForm.get('addhar')?.value instanceof File) {
+      formData.append(
+        'aadharFile',
+        this.profileForm.get('addhar')?.value
+      );
     }
 
-    if (licenseFile instanceof File) {
-      formData.append('drivingLicenseFile', licenseFile);
+    if (this.profileForm.get('License')?.value instanceof File) {
+      formData.append(
+        'drivingLicenseFile',
+        this.profileForm.get('License')?.value
+      );
     }
 
-    // Make HTTP POST request
-    this.http.post('https://backend-bla-bla.onrender.com/api/profile/update-profile', formData, { headers }).subscribe({
-      next: (res) => {
-        console.log('Profile updated:', res);
-        alert('Profile updated successfully!');
-      },
-      error: (err) => {
-        console.error('Profile update failed:', err);
-      }
-    });
+    this.http
+      .post(
+        'https://backend-bla-bla.onrender.com/api/profile/update-profile',
+        formData,
+        { headers }
+      )
+      .subscribe({
+        next: () => alert('Profile updated successfully!'),
+        error: err => console.error(err)
+      });
   }
 
-
-
-
-  // getting details in card of user profile 
-  otheData:any
   private loadProfile(): void {
-  const token = localStorage.getItem('authToken');
-  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${token}`
+    );
 
-  this.http.get<any>('https://backend-bla-bla.onrender.com/api/auth/user/profile', { headers })
-    .subscribe({
-      next: raw => {
-        console.log('profile GET raw response:', raw);
-
-        // Try common wrapper shapes
-        const data = raw?.payload ?? raw?.data ?? raw?.user ?? raw;
-
-        // Defensive guard: if still falsy, keep raw so console shows something
-        this.user = data || raw;
-console.log('Parsed user profile data:', data);
-        // Map backend field names to your form controls
-        const mapped = {
-          name: this.user?.name ?? this.user?.username ?? '',
-          email: this.user?.email ?? '',
-          about: this.user?.about ?? '',
-          phone: this.user?.phone ?? '',
-          address: this.user?.address ?? '',
-          // dob: this.formatDateForInput(this.user?.dob ?? this.user?.date_of_birth ?? this.user?.created_at),
-          gender: this.user?.gender ?? '',
-          role: this.user?.role ?? this.user?.Role ?? '',
-          vehicles: this.user?.vehicles ?? this.user?.Vehicles ?? '',
-          aadharNumber: this.user?.aadhar_number ?? this.user?.addhar ?? '',
-          drivingLicenseNumber: this.user?.driving_license_number ?? this.user?.license ?? ''
-        };
-
-        this.profileForm.patchValue(mapped);
-
-        // store user in localStorage if you want to reuse later (optional)
-        try {
+    this.http
+      .get<any>(
+        'https://backend-bla-bla.onrender.com/api/auth/user/profile',
+        { headers }
+      )
+      .subscribe({
+        next: raw => {
+          this.user = raw?.data ?? raw;
+          this.profileForm.patchValue(this.user);
           localStorage.setItem('user', JSON.stringify(this.user));
-        } catch (e) {
-          // ignore storage error
-        }
-      },
-      error: err => {
-        console.error('Failed to load profile:', err);
-      }
-    });
-}
-
+        },
+        error: err => console.error(err)
+      });
+  }
 }

@@ -89,110 +89,184 @@
 
 </div>
 <div *ngIf="showForm">
-  <form [formGroup]="profileForm" (ngSubmit)="updateProfile()" class="max-w-3xl mx-auto p-6 bg-white shadow-2xl rounded-2xl space-y-8">
-  <!-- Profile Header -->
-  <div class="flex items-center space-x-6">
-    <!-- upload photo  -->
-    <!-- <div class="relative group">
-      <div class="h-20 w-20 rounded-full bg-gray-200 flex items-center justify-center text-xl">
-        👤
+  <form
+    [formGroup]="profileForm"
+    (ngSubmit)="updateProfile()"
+    class="max-w-3xl mx-auto p-6 bg-white shadow-2xl rounded-2xl space-y-8 mt-10"
+  >
+    <!-- Profile Header -->
+    <div class="flex items-center space-x-6">
+      <div class="flex flex-col items-center mt-2">
+        <div class="animate-bounce text-3xl">💐</div>
       </div>
-      <input type="file" (change)="handleFileInput($event, 'profileImage')" class="absolute inset-0 opacity-0 cursor-pointer" />
-      <p class="text-sm text-center mt-2 text-gray-600">Upload Photo</p>
-    </div> -->
-    <div class="flex flex-col items-center mt-2">
-          <div class="animate-bounce text-3xl">
-              💐
-            </div>
-           
-          </div>
 
-    
-    
+      <div>
+        <h2 class="text-2xl font-bold text-orange-600">
+          Hii, {{ user?.name || 'Welcome Back!' }}
+        </h2>
+        <p class="text-gray-500 text-sm">
+          About: {{ user?.about || 'Manage your profile information' }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Contact Info -->
     <div>
-      <h2 class="text-2xl font-bold text-orange-600"> Hii, {{ user?.name || 'Welcome Back!' }}</h2>
-      <p class="text-gray-500 text-sm">About: {{ user?.about || 'Manage your profile information' }}</p>
-    </div>
-  </div>
+      <h3 class="text-lg font-semibold text-gray-700 mb-2">
+        📞 Contact Information
+      </h3>
 
-  <!-- Contact Info -->
-  <div>
-    <h3 class="text-lg font-semibold text-gray-700 mb-2">📞 Contact Information</h3>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      
-      <input type="email" placeholder="Email required" formControlName="email" class="input w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
-      focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200" />
-      <div class="flex space-x-2">
-        <input type="text" placeholder="Phone required" formControlName="phone" class="input flex-grow  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
-        focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200" />
-        <!-- <button type="button" class="text-sm text-blue-600 hover:underline">Verify OTP</button> -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <input
+          type="email"
+          placeholder="Email *"
+          formControlName="email"
+          class="input w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm"
+        />
+        <input
+          type="text"
+          placeholder="Phone *"
+          formControlName="phone"
+          class="input w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm"
+        />
       </div>
+
+      <p
+        *ngIf="profileForm.get('phone')?.touched && profileForm.get('phone')?.invalid"
+        class="text-red-400 text-sm mt-1"
+      >
+        Enter valid 10-digit phone number
+      </p>
+
+      <input
+        type="text"
+        placeholder="Address *"
+        formControlName="address"
+        class="input mt-4 w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm"
+      />
     </div>
-    <input type="text" placeholder="Address required" formControlName="address" class="input mt-4  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
-    focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200" />
-  </div>
 
-  <!-- Basic Info -->
-  <div>
-    <h3 class="text-lg font-semibold text-gray-700 mb-2">👤 Basic Information</h3>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <input type="date" formControlName="dob" placeholder="date of birth required" class="input  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
-      focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200" />
-      <input type="text" formControlName="role" placeholder="User type Driver/Rider required" class="input  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
-      focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200" />
+    <!-- Basic Info -->
+    <div>
+      <h3 class="text-lg font-semibold text-gray-700 mb-2">
+        👤 Basic Information
+      </h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <input
+          type="date"
+          formControlName="dob"
+          class="input w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm"
+        />
+        <p
+            *ngIf="
+            profileForm.get('dob')?.touched &&
+            profileForm.get('dob')?.errors?.['minAge']
+              "
+            class="text-red-400 text-sm mt-1"
+              >
+          You must be at least 18 years old
+        </p>
+
+        <!-- User Type Dropdown -->
+        <select
+          formControlName="role"
+          class="input w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm bg-white"
+        >
+          <option value="" disabled>Select User Type *</option>
+          <option value="driver">Driver</option>
+          <option value="rider">Rider</option>
+        </select>
+      </div>
+
+      <p
+        *ngIf="profileForm.get('role')?.touched && profileForm.get('role')?.invalid"
+        class="text-red-400 text-sm mt-1"
+      >
+        User type is required
+      </p>
+
+      <!-- Gender Dropdown -->
+      <select
+        formControlName="gender"
+        class="input mt-4 w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm bg-white"
+      >
+        <option value="" disabled>Select Gender *</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select>
+
+      <p
+        *ngIf="profileForm.get('gender')?.touched && profileForm.get('gender')?.invalid"
+        class="text-red-400 text-sm mt-1"
+      >
+        Gender is required
+      </p>
     </div>
-    <input type="text" formControlName="gender" placeholder="gender required" class="input  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
-    focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200
- mt-4" />
-  </div>
 
-  <!-- Vehicles -->
-  <div>
-    <h3 class="text-lg font-semibold text-gray-700 mb-2">🚗 Vehicle Information</h3>
-    <input type="text" formControlName="vehicles" placeholder="Vehicles with color if you are driver" class="input  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
-    focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200
-" />
-  </div>
+    <!-- Vehicles -->
+    <div>
+      <h3 class="text-lg font-semibold text-gray-700 mb-2">
+        🚗 Vehicle Information
+      </h3>
+      <input
+        type="text"
+        formControlName="vehicles"
+        placeholder="Vehicle details (only for drivers)"
+        class="input w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm"
+      />
+    </div>
 
-  <!-- Identity Verification -->
-  <div>
-    <h3 class="text-lg font-semibold text-gray-700 mb-2">🔒 Identity Verification</h3>
-    <input type="text" formControlName="addhar" placeholder="Aadhar / ID Number required" class="input  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
-    focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200
- mb-2" />
-    <input type="file" (change)="handleFileInput($event, 'addhar')" class="input  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
-    focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200
- mb-4" />
-    <input type="text" formControlName="License" placeholder="Driving License Number" class="input  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
-    focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200 mb-2" />
-    <!-- <input type="file" (change)="handleFileInput($event, 'License')" class="input w-full" /> -->
-    <input type="file" (change)="handleFileInput($event, 'License')" class="input  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
-    focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200
- mb-4" />
-  </div>
+    <!-- Identity Verification -->
+    <div>
+      <h3 class="text-lg font-semibold text-gray-700 mb-2">
+        🔒 Identity Verification
+      </h3>
 
-  <!-- Email Verification Status -->
-  <!-- <div>
-    <input type="text" formControlName="emailverify" readonly value="Email Verified" class="input  w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm text-gray-700 bg-white
-    focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200  font-semibold" />
-  </div> -->
+      <input
+        type="text"
+        formControlName="addhar"
+        placeholder="Aadhar / ID Number *"
+        class="input w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm mb-2"
+      />
+
+      <input
+        type="file"
+        (change)="handleFileInput($event, 'addhar')"
+        class="input w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm mb-4"
+      />
+
+      <input
+        type="text"
+        formControlName="License"
+        placeholder="Driving License Number"
+        class="input w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm mb-2"
+      />
+
+      <input
+        type="file"
+        (change)="handleFileInput($event, 'License')"
+        class="input w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm mb-4"
+      />
+    </div>
+
     <p *ngIf="profileForm.invalid" class="text-red-400 text-center">
-    Please fill all the required fields
-  </p>
-  <!-- Submit Button -->
-  <div class="text-center">
-    <button type="submit" [disabled]="profileForm.invalid" class="bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-xl transition duration-300 disabled:bg-orange-300
-    disabled:text-white/70
-    disabled:cursor-not-allowed
-    disabled:hover:bg-orange-300">
-      ✏️ Update Profile
-    </button>
-  </div>
-</form>
+      Please fill all required fields
+    </p>
 
-
-
+    <div class="text-center">
+      <button
+        type="submit"
+        [disabled]="profileForm.invalid"
+        class="bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-xl transition disabled:bg-orange-300 disabled:cursor-not-allowed"
+      >
+        ✏️ Update Profile
+      </button>
+    </div>
+  </form>
 </div>
+
 
 </div>
 
