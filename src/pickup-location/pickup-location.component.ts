@@ -442,8 +442,8 @@ export class PickupLocationComponent implements OnInit, AfterViewInit {
     this.http.post('https://backend-bla-bla.onrender.com/api/user/stop', {
       instruction: this.selectedStop?.instruction,
       user_id: this.user.id,
-      lat: 0,
-      lng: 0
+      lat: 28.6139,
+      lng: 77.2090
     }).subscribe(() => {
       this.router.navigate(['/calander']);
     });
