@@ -20,40 +20,45 @@
 
     <!-- DRIVER / RIDE INFO -->
     <div class="instant">
-      <p>✅ Verified Profile</p>
-      <p class="note">⛔ Rarely cancels rides</p>
-      <p>⌛ Booking will be confirmed after driver approval</p>
-      <p class="note">🚭 No smoking</p>
-      <p class="note">🚫 No drinking</p>
+  <p>✅ Verified Profile</p>
+  <p class="note">⛔ Rarely cancels rides</p>
+  <p>⌛ Booking will be confirmed after driver approval</p>
+  <p class="note">🚭 No smoking</p>
+  <p class="note">🚫 No drinking</p>
 
-      <hr class="my-3" />
+  <hr class="my-3" />
 
-      <p>
-        📍 <strong>Route:</strong>
-        {{ ride?.from_location }} → {{ ride?.to_location }}
-      </p>
+  <p>
+    📍 <strong>Route:</strong>
+    {{ ride?.from_location }} → {{ ride?.to_location }}
+  </p>
 
-      <p>
-        🗓 <strong>Date:</strong>
-        {{ ride?.date | date:'dd MMM yyyy' }}
-      </p>
+  <p>
+    🗓 <strong>Date:</strong>
+    {{ ride?.date | date:'dd MMM yyyy' }}
+  </p>
 
-      <p>
-        ⏰ <strong>Time:</strong>
-        {{ ride?.time }}
-      </p>
+  <p>
+    ⏰ <strong>Time:</strong>
+    {{ ride?.time }}
+  </p>
 
-      <p>
-        🪑 <strong>Seats Available:</strong>
-        {{ ride?.passengers }}
-      </p>
+  <p>
+    🪑 <strong>Seats Available:</strong>
+    {{ ride?.passengers }}
+  </p>
 
-      <hr class="my-3" />
+  <p>💰 <strong>Price:</strong>
+  {{ ride?.location_price > 0 ? '₹' + ride.location_price : 'Free' }}
+  </p>
 
-      <p>📞 {{ ride?.publisher_phone || 'Not available' }}</p>
-      <p>✉️ {{ ride?.publisher_email }}</p>
-      <p>🚗 {{ ride?.publisher_vehicle || 'Vehicle not specified' }}</p>
-    </div>
+  <hr class="my-3" />
+
+  <p>📞 {{ ride?.publisher_phone || 'Not available' }}</p>
+  <p>✉️ {{ ride?.publisher_email }}</p>
+  <p>🚗 {{ ride?.publisher_vehicle || 'Vehicle not specified' }}</p>
+</div>
+
 
   </div>
 
