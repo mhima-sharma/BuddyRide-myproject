@@ -1,182 +1,194 @@
+<!-- MOBILE HEADER -->
+<div class="md:hidden flex items-center justify-between px-4 py-3 border-b bg-white sticky top-0 z-50">
+  <h2 class="font-semibold text-orange-600">
+    BuddyRide Handbook
+  </h2>
+
+  <button (click)="toggleSidebar()">
+    <i class="fa-solid fa-bars text-xl text-gray-700"></i>
+  </button>
+</div>
+
 <div class="flex min-h-screen bg-white text-gray-800">
-  <aside class="w-72 border-r bg-gray-50 px-6 py-8 hidden md:block
-         sticky top-0 h-screen overflow-y-auto">
-    <h2 class="text-lg font-semibold mb-6 text-orange-600">
+
+  <aside
+    class="fixed md:static inset-y-0 left-0 z-40 w-72 border-r bg-gray-50 px-6 py-8
+           transform transition-transform duration-300
+           md:translate-x-0 md:block h-screen overflow-y-auto"
+    [ngClass]="{
+      '-translate-x-full': !isSidebarOpen,
+      'translate-x-0': isSidebarOpen
+    }"
+  >
+
+    <h2 class="text-lg font-semibold mb-6 mt-10 text-orange-600">
       BuddyRide Handbook
     </h2>
 
- <nav class="space-y-8 text-sm">
+    <nav class="space-y-8 text-sm">
 
-  <!-- Quick Start -->
-  <div>
-    <p class="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-3">
-      Quick Start
-    </p>
+      <!-- Quick Start -->
+      <div>
+        <p class="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-3">
+          Quick Start
+        </p>
 
-    <button
-      (click)="setSection('getting-started')"
-      class="relative flex items-center gap-3 w-full px-3 py-2 rounded-lg text-left
-             text-gray-700 font-medium transition-all duration-200
-             hover:bg-orange-50 hover:text-orange-600"
-      [ngClass]="{
-        'bg-orange-50 text-orange-600': activeSection === 'getting-started'
-      }">
-      
-      <!-- Dot -->
-      <span
-        class="h-2 w-2 rounded-full"
-        [ngClass]="activeSection === 'getting-started'
-          ? 'bg-orange-500'
-          : 'bg-gray-300'">
-      </span>
+        <button
+          (click)="setSection('getting-started'); closeSidebar()"
+          class="relative flex items-center gap-3 w-full px-3 py-2 rounded-lg text-left
+                 text-gray-700 font-medium transition-all duration-200
+                 hover:bg-orange-50 hover:text-orange-600"
+          [ngClass]="{
+            'bg-orange-50 text-orange-600': activeSection === 'getting-started'
+          }">
 
-      Introduction
+          <span
+            class="h-2 w-2 rounded-full"
+            [ngClass]="activeSection === 'getting-started'
+              ? 'bg-orange-500'
+              : 'bg-gray-300'">
+          </span>
 
-      <!-- Left active bar -->
-      <span
-        *ngIf="activeSection === 'getting-started'"
-        class="absolute left-0 top-1/2 -translate-y-1/2
-               h-6 w-1 bg-orange-500 rounded-full">
-      </span>
-    </button>
-  </div>
+          Introduction
 
-  <!-- Core Concepts -->
-  <div>
-    <p class="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-3">
-      Core Concepts
-    </p>
+          <span
+            *ngIf="activeSection === 'getting-started'"
+            class="absolute left-0 top-1/2 -translate-y-1/2
+                   h-6 w-1 bg-orange-500 rounded-full">
+          </span>
+        </button>
+      </div>
 
-    <!-- Publish Ride -->
-    <button
-      (click)="setSection('publish-ride')"
-      class="relative flex items-center gap-3 w-full px-3 py-2 rounded-lg text-left
-             text-gray-700 font-medium transition-all duration-200
-             hover:bg-orange-50 hover:text-orange-600"
-      [ngClass]="{
-        'bg-orange-50 text-orange-600': activeSection === 'publish-ride'
-      }">
+      <!-- Core Concepts -->
+      <div>
+        <p class="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-3">
+          Core Concepts
+        </p>
 
-      <span
-        class="h-2 w-2 rounded-full"
-        [ngClass]="activeSection === 'publish-ride'
-          ? 'bg-orange-500'
-          : 'bg-gray-300'">
-      </span>
+        <button
+          (click)="setSection('publish-ride'); closeSidebar()"
+          class="relative flex items-center gap-3 w-full px-3 py-2 rounded-lg text-left
+                 text-gray-700 font-medium transition-all duration-200
+                 hover:bg-orange-50 hover:text-orange-600"
+          [ngClass]="{
+            'bg-orange-50 text-orange-600': activeSection === 'publish-ride'
+          }">
 
-      Publish a Ride
+          <span
+            class="h-2 w-2 rounded-full"
+            [ngClass]="activeSection === 'publish-ride'
+              ? 'bg-orange-500'
+              : 'bg-gray-300'">
+          </span>
 
-      <span
-        *ngIf="activeSection === 'publish-ride'"
-        class="absolute left-0 top-1/2 -translate-y-1/2
-               h-6 w-1 bg-orange-500 rounded-full">
-      </span>
-    </button>
+          Publish a Ride
 
-    <!-- Search Ride -->
-    <button
-      (click)="setSection('search-ride')"
-      class="relative flex items-center gap-3 w-full px-3 py-2 rounded-lg text-left
-             text-gray-700 font-medium transition-all duration-200
-             hover:bg-orange-50 hover:text-orange-600"
-      [ngClass]="{
-        'bg-orange-50 text-orange-600': activeSection === 'search-ride'
-      }">
+          <span
+            *ngIf="activeSection === 'publish-ride'"
+            class="absolute left-0 top-1/2 -translate-y-1/2
+                   h-6 w-1 bg-orange-500 rounded-full">
+          </span>
+        </button>
 
-      <span
-        class="h-2 w-2 rounded-full"
-        [ngClass]="activeSection === 'search-ride'
-          ? 'bg-orange-500'
-          : 'bg-gray-300'">
-      </span>
+        <button
+          (click)="setSection('search-ride'); closeSidebar()"
+          class="relative flex items-center gap-3 w-full px-3 py-2 rounded-lg text-left
+                 text-gray-700 font-medium transition-all duration-200
+                 hover:bg-orange-50 hover:text-orange-600"
+          [ngClass]="{
+            'bg-orange-50 text-orange-600': activeSection === 'search-ride'
+          }">
 
-      Search & Book Ride
+          <span
+            class="h-2 w-2 rounded-full"
+            [ngClass]="activeSection === 'search-ride'
+              ? 'bg-orange-500'
+              : 'bg-gray-300'">
+          </span>
 
-      <span
-        *ngIf="activeSection === 'search-ride'"
-        class="absolute left-0 top-1/2 -translate-y-1/2
-               h-6 w-1 bg-orange-500 rounded-full">
-      </span>
-    </button>
+          Search & Book Ride
 
-    <!-- Booking Flow -->
-    <button
-      (click)="setSection('booking-flow')"
-      class="relative flex items-center gap-3 w-full px-3 py-2 rounded-lg text-left
-             text-gray-700 font-medium transition-all duration-200
-             hover:bg-orange-50 hover:text-orange-600"
-      [ngClass]="{
-        'bg-orange-50 text-orange-600': activeSection === 'booking-flow'
-      }">
+          <span
+            *ngIf="activeSection === 'search-ride'"
+            class="absolute left-0 top-1/2 -translate-y-1/2
+                   h-6 w-1 bg-orange-500 rounded-full">
+          </span>
+        </button>
 
-      <span
-        class="h-2 w-2 rounded-full"
-        [ngClass]="activeSection === 'booking-flow'
-          ? 'bg-orange-500'
-          : 'bg-gray-300'">
-      </span>
+        <button
+          (click)="setSection('booking-flow'); closeSidebar()"
+          class="relative flex items-center gap-3 w-full px-3 py-2 rounded-lg text-left
+                 text-gray-700 font-medium transition-all duration-200
+                 hover:bg-orange-50 hover:text-orange-600"
+          [ngClass]="{
+            'bg-orange-50 text-orange-600': activeSection === 'booking-flow'
+          }">
 
-      Booking Flow
+          <span
+            class="h-2 w-2 rounded-full"
+            [ngClass]="activeSection === 'booking-flow'
+              ? 'bg-orange-500'
+              : 'bg-gray-300'">
+          </span>
 
-      <span
-        *ngIf="activeSection === 'booking-flow'"
-        class="absolute left-0 top-1/2 -translate-y-1/2
-               h-6 w-1 bg-orange-500 rounded-full">
-      </span>
-    </button>
-  </div>
+          Booking Flow
 
-  <!-- Resources -->
-  <div>
-    <p class="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-3">
-      Resources
-    </p>
+          <span
+            *ngIf="activeSection === 'booking-flow'"
+            class="absolute left-0 top-1/2 -translate-y-1/2
+                   h-6 w-1 bg-orange-500 rounded-full">
+          </span>
+        </button>
+      </div>
 
-    <button
-      (click)="setSection('screenshots')"
-      class="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-left
-             text-gray-700 font-medium transition-all duration-200
-             hover:bg-orange-50 hover:text-orange-600"
-      [ngClass]="{
-        'bg-orange-50 text-orange-600': activeSection === 'screenshots'
-      }">
+      <!-- Resources -->
+      <div>
+        <p class="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-3">
+          Resources
+        </p>
 
-      <span
-        class="h-2 w-2 rounded-full"
-        [ngClass]="activeSection === 'screenshots'
-          ? 'bg-orange-500'
-          : 'bg-gray-300'">
-      </span>
+        <button
+          (click)="setSection('screenshots'); closeSidebar()"
+          class="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-left
+                 text-gray-700 font-medium transition-all duration-200
+                 hover:bg-orange-50 hover:text-orange-600"
+          [ngClass]="{
+            'bg-orange-50 text-orange-600': activeSection === 'screenshots'
+          }">
 
-      Screenshots
-    </button>
+          <span
+            class="h-2 w-2 rounded-full"
+            [ngClass]="activeSection === 'screenshots'
+              ? 'bg-orange-500'
+              : 'bg-gray-300'">
+          </span>
 
-    <button
-      (click)="setSection('social')"
-      class="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-left
-             text-gray-700 font-medium transition-all duration-200
-             hover:bg-orange-50 hover:text-orange-600"
-      [ngClass]="{
-        'bg-orange-50 text-orange-600': activeSection === 'social'
-      }">
+          Screenshots
+        </button>
 
-      <span
-        class="h-2 w-2 rounded-full"
-        [ngClass]="activeSection === 'social'
-          ? 'bg-orange-500'
-          : 'bg-gray-300'">
-      </span>
+        <button
+          (click)="setSection('social'); closeSidebar()"
+          class="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-left
+                 text-gray-700 font-medium transition-all duration-200
+                 hover:bg-orange-50 hover:text-orange-600"
+          [ngClass]="{
+            'bg-orange-50 text-orange-600': activeSection === 'social'
+          }">
 
-      Social & Support
-    </button>
-  </div>
+          <span
+            class="h-2 w-2 rounded-full"
+            [ngClass]="activeSection === 'social'
+              ? 'bg-orange-500'
+              : 'bg-gray-300'">
+          </span>
 
-</nav>
+          Social & Support
+        </button>
+      </div>
 
-
+    </nav>
   </aside>
 
-  <!-- ================= CONTENT ================= -->
   <main class="flex-1 px-6 py-10 max-w-4xl overflow-y-auto">
 
     <!-- ================= GETTING STARTED ================= -->
@@ -715,4 +727,5 @@
 
 
   </main>
+
 </div>

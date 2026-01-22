@@ -9,6 +9,17 @@ import { Component } from '@angular/core';
 })
 export class BuddyrideGuideComponent {
  activeSection = 'getting-started';
+ // add inside your component.ts
+isSidebarOpen = false;
+
+toggleSidebar() {
+  this.isSidebarOpen = !this.isSidebarOpen;
+}
+
+closeSidebar() {
+  this.isSidebarOpen = false;
+}
+
 
   setSection(section: string) {
     this.activeSection = section;
