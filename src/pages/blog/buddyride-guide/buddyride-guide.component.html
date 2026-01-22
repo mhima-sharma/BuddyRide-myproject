@@ -1,0 +1,718 @@
+<div class="flex min-h-screen bg-white text-gray-800">
+  <aside class="w-72 border-r bg-gray-50 px-6 py-8 hidden md:block
+         sticky top-0 h-screen overflow-y-auto">
+    <h2 class="text-lg font-semibold mb-6 text-orange-600">
+      BuddyRide Handbook
+    </h2>
+
+ <nav class="space-y-8 text-sm">
+
+  <!-- Quick Start -->
+  <div>
+    <p class="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-3">
+      Quick Start
+    </p>
+
+    <button
+      (click)="setSection('getting-started')"
+      class="relative flex items-center gap-3 w-full px-3 py-2 rounded-lg text-left
+             text-gray-700 font-medium transition-all duration-200
+             hover:bg-orange-50 hover:text-orange-600"
+      [ngClass]="{
+        'bg-orange-50 text-orange-600': activeSection === 'getting-started'
+      }">
+      
+      <!-- Dot -->
+      <span
+        class="h-2 w-2 rounded-full"
+        [ngClass]="activeSection === 'getting-started'
+          ? 'bg-orange-500'
+          : 'bg-gray-300'">
+      </span>
+
+      Introduction
+
+      <!-- Left active bar -->
+      <span
+        *ngIf="activeSection === 'getting-started'"
+        class="absolute left-0 top-1/2 -translate-y-1/2
+               h-6 w-1 bg-orange-500 rounded-full">
+      </span>
+    </button>
+  </div>
+
+  <!-- Core Concepts -->
+  <div>
+    <p class="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-3">
+      Core Concepts
+    </p>
+
+    <!-- Publish Ride -->
+    <button
+      (click)="setSection('publish-ride')"
+      class="relative flex items-center gap-3 w-full px-3 py-2 rounded-lg text-left
+             text-gray-700 font-medium transition-all duration-200
+             hover:bg-orange-50 hover:text-orange-600"
+      [ngClass]="{
+        'bg-orange-50 text-orange-600': activeSection === 'publish-ride'
+      }">
+
+      <span
+        class="h-2 w-2 rounded-full"
+        [ngClass]="activeSection === 'publish-ride'
+          ? 'bg-orange-500'
+          : 'bg-gray-300'">
+      </span>
+
+      Publish a Ride
+
+      <span
+        *ngIf="activeSection === 'publish-ride'"
+        class="absolute left-0 top-1/2 -translate-y-1/2
+               h-6 w-1 bg-orange-500 rounded-full">
+      </span>
+    </button>
+
+    <!-- Search Ride -->
+    <button
+      (click)="setSection('search-ride')"
+      class="relative flex items-center gap-3 w-full px-3 py-2 rounded-lg text-left
+             text-gray-700 font-medium transition-all duration-200
+             hover:bg-orange-50 hover:text-orange-600"
+      [ngClass]="{
+        'bg-orange-50 text-orange-600': activeSection === 'search-ride'
+      }">
+
+      <span
+        class="h-2 w-2 rounded-full"
+        [ngClass]="activeSection === 'search-ride'
+          ? 'bg-orange-500'
+          : 'bg-gray-300'">
+      </span>
+
+      Search & Book Ride
+
+      <span
+        *ngIf="activeSection === 'search-ride'"
+        class="absolute left-0 top-1/2 -translate-y-1/2
+               h-6 w-1 bg-orange-500 rounded-full">
+      </span>
+    </button>
+
+    <!-- Booking Flow -->
+    <button
+      (click)="setSection('booking-flow')"
+      class="relative flex items-center gap-3 w-full px-3 py-2 rounded-lg text-left
+             text-gray-700 font-medium transition-all duration-200
+             hover:bg-orange-50 hover:text-orange-600"
+      [ngClass]="{
+        'bg-orange-50 text-orange-600': activeSection === 'booking-flow'
+      }">
+
+      <span
+        class="h-2 w-2 rounded-full"
+        [ngClass]="activeSection === 'booking-flow'
+          ? 'bg-orange-500'
+          : 'bg-gray-300'">
+      </span>
+
+      Booking Flow
+
+      <span
+        *ngIf="activeSection === 'booking-flow'"
+        class="absolute left-0 top-1/2 -translate-y-1/2
+               h-6 w-1 bg-orange-500 rounded-full">
+      </span>
+    </button>
+  </div>
+
+  <!-- Resources -->
+  <div>
+    <p class="text-xs font-semibold tracking-widest text-gray-400 uppercase mb-3">
+      Resources
+    </p>
+
+    <button
+      (click)="setSection('screenshots')"
+      class="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-left
+             text-gray-700 font-medium transition-all duration-200
+             hover:bg-orange-50 hover:text-orange-600"
+      [ngClass]="{
+        'bg-orange-50 text-orange-600': activeSection === 'screenshots'
+      }">
+
+      <span
+        class="h-2 w-2 rounded-full"
+        [ngClass]="activeSection === 'screenshots'
+          ? 'bg-orange-500'
+          : 'bg-gray-300'">
+      </span>
+
+      Screenshots
+    </button>
+
+    <button
+      (click)="setSection('social')"
+      class="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-left
+             text-gray-700 font-medium transition-all duration-200
+             hover:bg-orange-50 hover:text-orange-600"
+      [ngClass]="{
+        'bg-orange-50 text-orange-600': activeSection === 'social'
+      }">
+
+      <span
+        class="h-2 w-2 rounded-full"
+        [ngClass]="activeSection === 'social'
+          ? 'bg-orange-500'
+          : 'bg-gray-300'">
+      </span>
+
+      Social & Support
+    </button>
+  </div>
+
+</nav>
+
+
+  </aside>
+
+  <!-- ================= CONTENT ================= -->
+  <main class="flex-1 px-6 py-10 max-w-4xl overflow-y-auto">
+
+    <!-- ================= GETTING STARTED ================= -->
+  <section *ngIf="activeSection === 'getting-started'" class="max-w-4xl">
+
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900 mb-3">
+      Getting Started
+    </h1>
+
+    <p class="text-gray-600 leading-relaxed">
+      Buddy Ride is a modern ride-sharing platform designed to connect passengers and
+      drivers efficiently, safely, and seamlessly. It simplifies daily and inter-city
+      commuting by enabling cost-effective, eco-friendly ride sharing within local
+      communities.
+    </p>
+  </div>
+
+  <!-- Tip Card -->
+  <div class="flex items-start gap-3 bg-blue-50 border border-blue-200
+              p-4 rounded-xl text-sm text-blue-900 mb-10">
+    <span class="text-lg">💡</span>
+    <p>
+      <strong>Tip:</strong> BuddyRide is ideal for daily office commutes and
+      long-distance inter-city travel.
+    </p>
+  </div>
+
+  <!-- User Roles -->
+  <div class="mb-10">
+    <h2 class="text-xl font-semibold text-gray-800 mb-4">
+      User Roles
+    </h2>
+
+    <div class="grid sm:grid-cols-2 gap-4">
+      <!-- Driver -->
+      <div class="border rounded-xl p-4 bg-white shadow-sm">
+        <h3 class="font-semibold mb-2 flex items-center gap-2">
+          🚗 Driver
+        </h3>
+        <p class="text-sm text-gray-600 leading-relaxed">
+          Publishes rides, manages bookings, accepts or rejects passengers,
+          and updates ride status in real time.
+        </p>
+      </div>
+
+      <!-- Passenger -->
+      <div class="border rounded-xl p-4 bg-white shadow-sm">
+        <h3 class="font-semibold mb-2 flex items-center gap-2">
+          🧍 Passenger
+        </h3>
+        <p class="text-sm text-gray-600 leading-relaxed">
+          Searches for available rides, books seats, and tracks ride
+          details from booking to completion.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Architecture -->
+  <div class="mb-6">
+    <h2 class="text-xl font-semibold text-gray-800 mb-4">
+      Platform Architecture
+    </h2>
+
+    <div class="overflow-x-auto rounded-xl border">
+      <table class="w-full text-sm">
+        <thead class="bg-gray-100 text-gray-700">
+          <tr>
+            <th class="px-4 py-3 text-left font-semibold">Layer</th>
+            <th class="px-4 py-3 text-left font-semibold">Technology</th>
+          </tr>
+        </thead>
+
+        <tbody class="divide-y">
+          <tr>
+            <td class="px-4 py-3 font-medium">Frontend</td>
+            <td class="px-4 py-3">
+              <a href="https://angular.dev/tutorials/learn-angular" target="_blank"
+                 class="text-blue-600 hover:underline font-medium">Angular</a>
+              <span class="text-gray-400 mx-1">+</span>
+              <a href="https://tailwindcss.com/docs" target="_blank"
+                 class="text-blue-600 hover:underline font-medium">Tailwind CSS</a>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="px-4 py-3 font-medium">Backend</td>
+            <td class="px-4 py-3">
+              <a href="https://nodejs.org/en/docs/" target="_blank"
+                 class="text-blue-600 hover:underline font-medium">
+                Node.js (REST APIs)
+              </a>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="px-4 py-3 font-medium">Database</td>
+            <td class="px-4 py-3">
+              <a href="https://dev.mysql.com/doc/" target="_blank"
+                 class="text-blue-600 hover:underline font-medium">
+                MySQL
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="text-xs text-gray-500 mt-3">
+      Credits: All documentation links reference official technology websites.
+    </p>
+  </div>
+
+  </section>
+
+
+    <!-- ================= PUBLISH RIDE ================= -->
+  <section *ngIf="activeSection === 'publish-ride'" class="px-4 md:px-8 py-6">
+
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-1">
+      Publish a Ride
+    </h1>
+    <p class="text-gray-500">
+      Share your route and offer seats to passengers travelling along the way.
+    </p>
+  </div>
+
+  <!-- Step Flow -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-10">
+    <div class="p-4 rounded-xl border bg-white shadow-sm">
+      <span class="text-orange-600 font-bold text-sm">STEP 1</span>
+      <p class="font-semibold text-gray-800 mt-1">Login as Driver</p>
+      <p class="text-sm text-gray-500">Access driver features</p>
+    </div>
+
+    <div class="p-4 rounded-xl border bg-white shadow-sm">
+      <span class="text-orange-600 font-bold text-sm">STEP 2</span>
+      <p class="font-semibold text-gray-800 mt-1">Choose Route</p>
+      <p class="text-sm text-gray-500">Pickup & drop locations</p>
+    </div>
+
+    <div class="p-4 rounded-xl border bg-white shadow-sm">
+      <span class="text-orange-600 font-bold text-sm">STEP 3</span>
+      <p class="font-semibold text-gray-800 mt-1">Add Stops</p>
+      <p class="text-sm text-gray-500">Optional pickup points</p>
+    </div>
+
+    <div class="p-4 rounded-xl border bg-white shadow-sm">
+      <span class="text-orange-600 font-bold text-sm">STEP 4</span>
+      <p class="font-semibold text-gray-800 mt-1">Publish Ride</p>
+      <p class="text-sm text-gray-500">Make it visible</p>
+    </div>
+  </div>
+
+  <!-- Screenshot -->
+  <div class="rounded-xl overflow-hidden shadow-lg mb-10 bg-white">
+    <div class="px-4 py-2 bg-gray-100 text-sm font-medium text-gray-700">
+      Publish Ride Interface Preview
+    </div>
+    <img
+      src="assets/images/publishridepage.png"
+      alt="Publish Ride Screen"
+      class="w-full object-cover"
+    >
+  </div>
+
+  <!-- Example Ride -->
+  <div class="bg-orange-50 border border-orange-200 rounded-xl p-5 mb-8">
+    <h3 class="font-semibold text-orange-700 mb-3">
+      Example Ride
+    </h3>
+    <div class="text-sm text-gray-700 space-y-1">
+      <p><strong>Route:</strong> Delhi → Jaipur</p>
+      <p><strong>Date:</strong> 25 Jan 2026</p>
+      <p><strong>Available Seats:</strong> 3</p>
+      <p><strong>Price per Seat:</strong> ₹450</p>
+    </div>
+  </div>
+
+  <!-- Validation / Warning -->
+  <div class="flex items-start gap-3 bg-red-50 border border-red-200 p-4 rounded-lg text-sm text-red-700 mb-10">
+    <span class="text-lg">⚠️</span>
+    <p>
+      <strong>Date Restriction:</strong>
+      You cannot publish rides for past dates. Please select a valid future date.
+    </p>
+  </div>
+
+  <!-- Call to Action -->
+  <div class="bg-gray-50 border rounded-xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+    <div>
+      <h4 class="font-semibold text-gray-800">
+        Ready to publish your ride?
+      </h4>
+      <p class="text-sm text-gray-500">
+        Verify route details and make your ride available to passengers.
+      </p>
+    </div>
+
+    <button
+      class="bg-orange-600 hover:bg-orange-700 transition text-white px-6 py-3 rounded-lg font-semibold shadow"
+    >
+    <a href="/"> Publish Ride</a>
+     
+    </button>
+  </div>
+
+</section>
+
+
+    <!-- ================= SEARCH RIDE ================= -->
+   <section *ngIf="activeSection === 'search-ride'" class="px-4 md:px-8 py-6">
+
+  <!-- Heading -->
+  <div class="text-center mb-6">
+    <h1 class="text-3xl font-bold text-orange-600 mb-2">
+      Find a Ride
+    </h1>
+    <p class="text-gray-500">
+      Search for available rides and request a seat.
+    </p>
+  </div>
+
+  <!-- Instructions (Matched with Image Flow) -->
+  <div class="bg-white border rounded-xl shadow-sm p-5 mb-6">
+    <ul class="space-y-3 text-gray-700 text-sm">
+      <li class="flex items-center gap-2">
+        <span class="text-orange-500 font-bold">•</span>
+        Enter your <strong>Leaving from</strong> and <strong>Going to</strong> locations
+      </li>
+      <li class="flex items-center gap-2">
+        <span class="text-orange-500 font-bold">•</span>
+        Select your <strong>travel date</strong> and number of seats
+      </li>
+      <li class="flex items-center gap-2">
+        <span class="text-orange-500 font-bold">•</span>
+        Click <strong>Search</strong> to view available rides
+      </li>
+      <li class="flex items-center gap-2">
+        <span class="text-orange-500 font-bold">•</span>
+        Send a booking request to the driver
+      </li>
+    </ul>
+  </div>
+
+  <!-- Empty State (As Seen in Image) -->
+  <div class="text-center py-10 border rounded-xl bg-gray-50 mb-6">
+    <p class="text-gray-500 font-medium">
+      No rides available.
+    </p>
+    <p class="text-sm text-gray-400 mt-1">
+      Try changing your route, date, or seat count.
+    </p>
+  </div>
+
+  <!-- Info Note -->
+  <div class="flex items-start gap-3 bg-blue-50 border border-blue-200 p-4 rounded-lg text-sm text-blue-700">
+    <span class="text-lg">ℹ️</span>
+    <p>
+      <strong>Note:</strong> Booking is confirmed only after the driver approves your request.
+    </p>
+  </div>
+
+</section>
+
+
+    <!-- ================= BOOKING FLOW ================= -->
+   <section *ngIf="activeSection === 'booking-flow'" class="px-4 md:px-8 py-6">
+
+  <!-- Heading -->
+  <div class="text-center mb-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-2">
+      Booking Flow
+    </h1>
+    <p class="text-gray-500">
+      Understand how ride booking works in BuddyRide.
+    </p>
+  </div>
+
+  <!-- Flow Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+
+    <!-- Step 1 -->
+    <div class="bg-white border rounded-xl shadow-sm p-5 text-center">
+      <div class="text-orange-600 font-bold text-lg mb-2">Step 1</div>
+      <h3 class="font-semibold text-gray-800 mb-1">
+        Send Booking Request
+      </h3>
+      <p class="text-sm text-gray-500">
+        Passenger selects a ride and sends a booking request.
+      </p>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="bg-white border rounded-xl shadow-sm p-5 text-center">
+      <div class="text-orange-600 font-bold text-lg mb-2">Step 2</div>
+      <h3 class="font-semibold text-gray-800 mb-1">
+        Driver Notification
+      </h3>
+      <p class="text-sm text-gray-500">
+        Driver receives a booking notification.
+      </p>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="bg-white border rounded-xl shadow-sm p-5 text-center">
+      <div class="text-orange-600 font-bold text-lg mb-2">Step 3</div>
+      <h3 class="font-semibold text-gray-800 mb-1">
+        Accept or Reject
+      </h3>
+      <p class="text-sm text-gray-500">
+        Driver reviews and responds to the request.
+      </p>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="bg-white border rounded-xl shadow-sm p-5 text-center">
+      <div class="text-orange-600 font-bold text-lg mb-2">Step 4</div>
+      <h3 class="font-semibold text-gray-800 mb-1">
+        Seat Update
+      </h3>
+      <p class="text-sm text-gray-500">
+        Available seats update automatically.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Info Note -->
+  <div class="mt-8 flex items-start gap-3 bg-green-50 border border-green-200 p-4 rounded-lg text-sm text-green-700">
+    <span class="text-lg">✔️</span>
+    <p>
+      <strong>Transparency:</strong>
+      Passengers are notified immediately once the driver responds.
+    </p>
+  </div>
+
+</section>
+
+
+    <!-- ================= SCREENSHOTS ================= -->
+   <section *ngIf="activeSection === 'screenshots'" class="px-4 md:px-8 py-6">
+
+  <!-- Header -->
+  <div class="text-center mb-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-2">
+      Application Screenshots
+    </h1>
+    <p class="text-gray-500">
+      Explore key screens of the BuddyRide platform.
+    </p>
+  </div>
+
+  <!-- Website Link Card -->
+  <div class="bg-orange-50 border border-orange-200 rounded-xl p-5 mb-8 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div>
+      <h3 class="font-semibold text-orange-700">
+        Live Website
+      </h3>
+      <p class="text-sm text-gray-600">
+        Visit BuddyRide to explore the platform in action.
+      </p>
+      <a
+        href="https://buddy-ride-myproject.vercel.app/"
+        target="_blank"
+        class="text-sm text-orange-600 underline break-all"
+      >
+        https://buddy-ride-myproject.vercel.app/
+      </a>
+    </div>
+
+    <a
+      href="https://buddy-ride-myproject.vercel.app/"
+      target="_blank"
+      class="bg-orange-600 hover:bg-orange-700 transition text-white px-6 py-2 rounded-lg font-semibold shadow"
+    >
+      Open Website
+    </a>
+  </div>
+
+  <!-- Screenshot Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+    <div class="bg-white border rounded-xl shadow-sm overflow-hidden hover:shadow-md transition">
+      <img src="assets/images/searchpage.png" alt="Find a Ride" class="w-full">
+      <div class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-50">
+        Find a Ride
+      </div>
+    </div>
+
+    <div class="bg-white border rounded-xl shadow-sm overflow-hidden hover:shadow-md transition">
+      <img src="assets/images/publishridepage.png" alt="Publish Ride" class="w-full">
+      <div class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-50">
+        Publish Ride
+      </div>
+    </div>
+
+    <div class="bg-white border rounded-xl shadow-sm overflow-hidden hover:shadow-md transition">
+      <img src="assets/images/homepage.png" alt="Home Page" class="w-full">
+      <div class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-50">
+        Home Page
+      </div>
+    </div>
+
+    <div class="bg-white border rounded-xl shadow-sm overflow-hidden hover:shadow-md transition">
+      <img src="assets/images/footerimage.png" alt="Footer Section" class="w-full">
+      <div class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-50">
+        Footer Section
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+
+    <!-- ================= SOCIAL ================= -->
+ <section *ngIf="activeSection === 'social'" class="px-4 md:px-8 py-6">
+
+  <!-- Header -->
+  <div class="text-center mb-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-2">
+      Social & Support
+    </h1>
+    <p class="text-gray-500">
+      Connect with BuddyRide or reach out for help.
+    </p>
+  </div>
+
+  <!-- QR Code + Project Info -->
+  <div class="bg-white border rounded-2xl shadow-sm p-6 flex flex-col md:flex-row items-center gap-8 mb-10">
+
+    <!-- QR Code -->
+    <div class="flex flex-col items-center bg-gradient-to-r from-orange-400 to-yellow-400 p-4 rounded-xl shadow-lg w-52">
+  <div class="bg-white p-2 rounded-xl shadow-md">
+    <img
+      src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://buddy-ride-myproject.vercel.app/"
+      alt="BuddyRide QR Code"
+      class="w-36 h-36"
+    />
+  </div>
+  <p class="text-sm font-medium text-white mt-3 text-center">
+    Scan to open <span class="font-bold">BuddyRide</span>
+  </p>
+  <a href="https://buddy-ride-myproject.vercel.app/" target="_blank"
+     class="mt-2 px-4 py-1 bg-white text-orange-500 font-semibold rounded-full hover:bg-gray-100 transition">
+    Open App
+  </a>
+</div>
+
+
+    <!-- Project Info -->
+    <div class="flex-1">
+      <h3 class="text-lg font-semibold text-gray-800 mb-2">
+        BuddyRide – Ride Sharing Platform
+      </h3>
+
+      <p class="text-sm text-gray-600 mb-4">
+        A smart carpooling platform that allows drivers to publish rides and
+        passengers to search, book, and travel together efficiently.
+      </p>
+
+      <p class="text-sm">
+        🌐 <strong>Website:</strong>
+        <a
+          href="https://buddy-ride-myproject.vercel.app/"
+          target="_blank"
+          class="text-orange-600 underline break-all"
+        >
+         https://buddy-ride-myproject.vercel.app/
+        </a>
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Social & Support Links -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+    <!-- Website -->
+    <a
+      href="https://buddy-ride-myproject.vercel.app/"
+      target="_blank"
+      class="flex items-center gap-3 bg-white border rounded-lg p-4 hover:shadow transition"
+    >
+      <i class="fa-solid fa-globe text-orange-600 text-lg"></i>
+      <span class="text-sm font-medium text-gray-700">Website</span>
+    </a>
+
+    <!-- Email -->
+    <a
+      href="mailto:dev.nest.ms@gmail.com"
+      class="flex items-center gap-3 bg-white border rounded-lg p-4 hover:shadow transition"
+    >
+      <i class="fa-solid fa-envelope text-orange-600 text-lg"></i>
+      <span class="text-sm font-medium text-gray-700">BuddyRide... 'dev.nest.ms'</span>
+    </a>
+
+    <!-- Instagram -->
+    <a
+      href="https://www.instagram.com/_dev_nest_ms?igsh=ZXV3cXR2ZDloaHA="
+      target="_blank"
+      class="flex items-center gap-3 bg-white border rounded-lg p-4 hover:shadow transition"
+    >
+      <i class="fa-brands fa-instagram text-orange-600 text-lg"></i>
+      <span class="text-sm font-medium text-gray-700">BuddyRide..... '_dev_nest_ms'</span>
+    </a>
+
+    <!-- LinkedIn -->
+    <a
+      href="https://www.linkedin.com/in/devnest-ms-a576543a7/"
+      target="_blank"
+      class="flex items-center gap-3 bg-white border rounded-lg p-4 hover:shadow transition"
+    >
+      <i class="fa-brands fa-linkedin text-orange-600 text-lg"></i>
+      <span class="text-sm font-medium text-gray-700">BuddyRide..... </span>
+    </a>
+
+    <!-- YouTube -->
+    <a
+      href="https://www.youtube.com/@DevNestMS"
+      target="_blank"
+      class="flex items-center gap-3 bg-white border rounded-lg p-4 hover:shadow transition"
+    >
+      <i class="fa-brands fa-youtube text-orange-600 text-lg"></i>
+      <span class="text-sm font-medium text-gray-700">BuddyRide..... 'DevNestMS'</span>
+    </a>
+
+  </div>
+
+</section>
+
+
+  </main>
+</div>

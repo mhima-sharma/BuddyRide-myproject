@@ -30,6 +30,7 @@ import { RideDetalisCardComponent } from '../ride-detalis-card/ride-detalis-card
 import { UserRidesComponent } from '../user-rides/user-rides.component';
 import { ContactWithUsComponent } from '../contact-with-us/contact-with-us.component';
 import { FaqsComponent } from './faqs/faqs.component';
+import { BuddyrideGuideComponent } from '../pages/blog/buddyride-guide/buddyride-guide.component';
 
 export const routes: Routes = [
     { path: '', component: SplashComponent },
@@ -60,6 +61,7 @@ export const routes: Routes = [
     { path: 'my-ride', component: UserRidesComponent},
     { path: 'contact', component: ContactWithUsComponent},
     { path: 'faqs', component: FaqsComponent},
+    { path: 'buddyride-guide', component: BuddyrideGuideComponent},
 
     // { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }
