@@ -1,74 +1,101 @@
 <app-header></app-header>
 
-<div class="p-20">
-  <h1 class="text-3xl font-bold text-center text-orange-700 mb-5">
-    Would you like to proceed with booking this ride?
-  </h1>
+<div class="min-h-screen bg-gradient-to-b from-sky-50 to-white px-4 py-12 flex justify-center pt-20">
 
-  <div class="card driver-card" *ngIf="ride">
+  <div class="w-full max-w-4xl bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col md:flex-row">
 
-    <!-- DRIVER HEADER -->
-    <div class="driver-header">
-      <div class="icon">👤</div>
-      <div>
-        <div class="driver-name">
-          {{ ride?.publisher_name || 'Ride Publisher' }}
-        </div>
-        <div class="rating">⭐ 3/5 • 1 rating</div>
-      </div>
+    <!-- Left: Image / Route Illustration (Desktop) -->
+    <div class="md:w-1/3 bg-orange-50 flex items-center justify-center p-6 hidden md:flex">
+      <img src="/assets/images/background.png" alt="Ride" class="w-full h-auto object-contain" />
     </div>
 
-    <!-- DRIVER / RIDE INFO -->
-    <div class="instant">
-  <p>✅ Verified Profile</p>
-  <p class="note">⛔ Rarely cancels rides</p>
-  <p>⌛ Booking will be confirmed after driver approval</p>
-  <p class="note">🚭 No smoking</p>
-  <p class="note">🚫 No drinking</p>
+    <!-- Right: Ride Info -->
+    <div class="w-full md:w-2/3 p-6 space-y-5">
 
-  <hr class="my-3" />
+      <!-- Header / Route -->
+      <div class="flex justify-between items-center">
+        <h2 class="text-xl font-bold text-orange-700">
+          {{ ride?.from_location || 'From' }} → {{ ride?.to_location || 'To' }}
+        </h2>
+        <span class="text-sm text-gray-500">Ride Details</span>
+      </div>
 
-  <p>
-    📍 <strong>Route:</strong>
-    {{ ride?.from_location }} → {{ ride?.to_location }}
-  </p>
+      <!-- Driver Info -->
+      <div class="flex items-center gap-4 p-3 border rounded-lg bg-orange-50">
+        <div class="w-14 h-14 rounded-full bg-orange-100 flex items-center justify-center text-2xl">👤</div>
+        <div class="flex-1">
+          <div class="text-lg font-semibold text-gray-800">
+            {{ ride?.publisher_name || 'Ride Publisher' }}
+          </div>
+          <div class="text-sm text-gray-500 flex items-center gap-1">
+            <i class="fas fa-star text-yellow-400"></i>
+            ⭐ 3/5 • 1 rating
+          </div>
+        </div>
+        <button class="px-3 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition text-sm">
+          Call
+        </button>
+      </div>
 
-  <p>
-    🗓 <strong>Date:</strong>
-    {{ ride?.date | date:'dd MMM yyyy' }}
-  </p>
+      <!-- Ride Info -->
+      <div class="space-y-2 text-gray-700">
+        <div class="flex items-center gap-2">
+          <i class="fas fa-check-circle text-green-500"></i>
+          <span>Verified Profile</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <i class="fas fa-exclamation-circle text-red-500"></i>
+          <span>Rarely cancels rides</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <i class="fas fa-hourglass-half text-orange-500"></i>
+          <span>Booking confirmed after driver approval</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <i class="fas fa-smoking-ban text-gray-500"></i>
+          <span>No Smoking</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <i class="fas fa-wine-bottle text-gray-500"></i>
+          <span>No Drinking</span>
+        </div>
 
-  <p>
-    ⏰ <strong>Time:</strong>
-    {{ ride?.time }}
-  </p>
+        <hr class="my-3 border-gray-200" />
 
-  <p>
-    🪑 <strong>Seats Available:</strong>
-    {{ ride?.passengers }}
-  </p>
+        <!-- Route & Details -->
+        <p><i class="fa-solid fa-route text-orange-500"></i> <strong>Route:</strong> {{ ride?.from_location }} → {{ ride?.to_location }}</p>
+        <p><i class="fa-solid fa-calendar text-orange-500"></i><strong>Date:</strong> {{ ride?.date | date:'dd MMM yyyy' }}</p>
+        <p><i class="fa-solid fa-clock text-orange-500"></i> <strong>Time:</strong> {{ ride?.time }}</p>
+        <p><i class="fa-solid fa-chair text-orange-500"></i> <strong>Seats Available:</strong> {{ ride?.passengers }}</p>
+        <p><i class="fa-solid fa-indian-rupee-sign text-orange-500"></i> <strong>Price:</strong> {{ ride?.location_price > 0 ? '₹' + ride.location_price : 'Free' }}</p>
 
-  <p>💰 <strong>Price:</strong>
-  {{ ride?.location_price > 0 ? '₹' + ride.location_price : 'Free' }}
-  </p>
+        <hr class="my-3 border-gray-200" />
 
-  <hr class="my-3" />
+        <!-- Contact -->
+        <p><i class="fa-solid fa-phone text-orange-500"></i> {{ ride?.publisher_phone || 'Not available' }}</p>
+        <p><i class="fa-solid fa-envelope text-orange-500"></i> {{ ride?.publisher_email }}</p>
+        <p><i class="fa-solid fa-car text-orange-500"></i> {{ ride?.publisher_vehicle || 'Vehicle not specified' }}</p>
+      </div>
 
-  <p>📞 {{ ride?.publisher_phone || 'Not available' }}</p>
-  <p>✉️ {{ ride?.publisher_email }}</p>
-  <p>🚗 {{ ride?.publisher_vehicle || 'Vehicle not specified' }}</p>
-</div>
+      <!-- Action Buttons -->
+      <div class="space-y-3 mt-4">
+        <button
+          (click)="requestRide()"
+          class="w-full py-3 bg-orange-600 text-white rounded-xl font-semibold hover:bg-orange-700 transition"
+        >
+          Request to Book This Ride
+        </button>
+        <button
+          *ngIf="ride"
+          routerLink="/home"
+          class="w-full py-3 bg-white border border-gray-300 text-gray-800 rounded-xl font-semibold hover:bg-gray-50 transition"
+        >
+          Cancel Ride
+        </button>
+      </div>
 
-
+    </div>
   </div>
-
-  <button
-    (click)="requestRide()"
-    class="contact-btn mt-5"
-    *ngIf="ride"
-  >
-    Request to Book This Ride
-  </button>
 </div>
 
 <app-footer></app-footer>

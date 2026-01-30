@@ -1,41 +1,128 @@
 <app-header></app-header>
+
+<!-- CONTAINER -->
 <div
-  class="min-h-screen bg-cover bg-center flex items-center justify-center"
-  style="background-image: url('../assets/images/map.jpg');">
+  class="min-h-screen flex items-center justify-center bg-orange-50 px-4 pt-24 pb-12"
+>
 
-<form [formGroup]="rideForm" (ngSubmit)="submitRide()" 
-      class="max-w-md mx-auto mt-10 bg-white shadow-lg rounded-2xl p-6 space-y-6">
+  <form
+    [formGroup]="rideForm"
+    (ngSubmit)="publishRide()"
+    class="w-full max-w-md bg-white rounded-3xl shadow-lg p-6 space-y-6"
+  >
 
-  <h2 class="text-2xl font-bold text-gray-800 text-center mb-4">Schedule Your Ride</h2>
+    <!-- Icon / Title -->
+    <div class="flex flex-col items-center -mt-16">
+      <div class="w-20 h-20 rounded-full bg-orange-100 flex items-center justify-center shadow-sm">
+        <span class="text-4xl"><i class="fa-sharp-duotone fa-solid fa-car"></i></span>
+      </div>
 
-  <div>
-    <label class="block text-gray-700 font-medium mb-1">Pick-up Time</label>
-    <input type="time" formControlName="time"
-           class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition" 
-           required />
-  </div>
+      <h2 class="text-xl font-bold text-orange-700 mt-4">
+        Publish a Ride
+      </h2>
 
-  <div>
-    <label class="block text-gray-700 font-medium mb-1">Pick-up Date</label>
-    <input type="date" formControlName="date"
-           class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition" 
-           required />
-  </div>
+      <p class="text-sm text-gray-500 text-center mt-1">
+        Share your ride and save on travel
+      </p>
+    </div>
 
-  <div>
-    <label class="block text-gray-700 font-medium mb-1">Pick-up Location</label>
-    <input type="text" formControlName="location" placeholder="Enter location"
-    #locationInput
-    class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition" 
-    required />
-  </div>
-  
+    <!-- Pickup Location -->
+    <div class="relative">
+      <span class="absolute left-3 top-3 text-orange-600 text-lg"><i class="fa-solid fa-location-dot"></i></span>
+      <input
+        type="text"
+        formControlName="from"
+        #pickupInput
+        placeholder="Pickup location"
+        class="w-full pl-10 p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-400 outline-none transition"
+      />
+      <p *ngIf="rideForm.get('from')?.value" class="text-xs text-gray-500 mt-1">
+        You confirmed your location earlier. Please confirm again or change location if you want.
+      </p>
+    </div>
 
-  <button type="submit"
-          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-full transition duration-200">
-    Continue
-  </button>
+    <!-- Drop Location -->
+    <div class="relative">
+      <span class="absolute left-3 top-3 text-orange-600 text-lg"><i class="fa-solid fa-location-dot"></i></span>
+      <input
+        type="text"
+        formControlName="to"
+        #dropoffInput
+        placeholder="Drop location"
+        class="w-full pl-10 p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-400 outline-none transition"
+      />
+      <p *ngIf="rideForm.get('to')?.value" class="text-xs text-gray-500 mt-1">
+        You confirmed your location earlier. Please confirm again or change location if you want.
+      </p>
+    </div>
 
-</form>
+    <!-- Date & Time -->
+    <div class="flex gap-3">
+      <div class="w-1/2">
+        <label class="text-xs text-gray-500 mb-1 block">Date</label>
+        <input
+          type="date"
+          formControlName="date"
+          class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-400 outline-none"
+        />
+      </div>
+
+      <div class="w-1/2">
+        <label class="text-xs text-gray-500 mb-1 block">Time</label>
+        <input
+          type="time"
+          formControlName="time"
+          class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-400 outline-none"
+        />
+      </div>
+    </div>
+
+    <!-- Available Seats -->
+    <div class="flex items-center justify-between bg-orange-50 rounded-xl p-3">
+      <span class="text-gray-700 font-medium">Available Seats</span>
+      <div class="flex items-center gap-3">
+        <button
+          type="button"
+          (click)="decrease()"
+          class="w-8 h-8 rounded-full border border-orange-300 text-lg hover:bg-orange-100 transition"
+        >−</button>
+        <span class="font-semibold text-lg">{{ passengerCount }}</span>
+        <button
+          type="button"
+          (click)="increase()"
+          class="w-8 h-8 rounded-full border border-orange-500 text-orange-500 text-lg hover:bg-orange-100 transition"
+        >+</button>
+      </div>
+    </div>
+
+    <!-- Price -->
+    <div class="relative">
+      <span class="absolute left-3 top-3 text-gray-500 text-lg">₹</span>
+      <input
+        type="number"
+        formControlName="price"
+        placeholder="Price per seat"
+        class="w-full pl-10 p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-400 outline-none transition"
+      />
+      <p class="text-xs text-gray-400 mt-1">
+        Recommended price: ₹200 – ₹300
+      </p>
+    </div>
+
+    <!-- Publish Button -->
+    <button
+      type="submit"
+      class="w-full bg-orange-700 text-white py-3 rounded-xl font-semibold hover:bg-orange-800 transition shadow"
+    >
+      Publish Ride
+    </button>
+
+    <!-- Error Message -->
+    <p *ngIf="error" class="text-red-500 text-sm text-center">
+      {{ message }}
+    </p>
+
+  </form>
 </div>
+
 <app-footer></app-footer>

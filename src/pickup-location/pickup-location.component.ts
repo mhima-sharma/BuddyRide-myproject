@@ -445,7 +445,7 @@ export class PickupLocationComponent implements OnInit, AfterViewInit {
       lat: 28.6139,
       lng: 77.2090
     }).subscribe(() => {
-      this.router.navigate(['/calander']);
+      this.router.navigate(['/time']);
     });
   }
 }

@@ -1,7 +1,57 @@
 <!-- publish-ride-confirmation.component.html -->
-<div class="text-center mt-70">
-    <h2 class="text-4xl font-bold text-orange-700">Your ride has been successfully published!</h2>
-    <p class="text-xl text-gray-500">Thank you for publishing your ride. You can now view it on the ride list.</p>
-    <a routerLink="/published" class="cursor-pointer text-sky-700">Go to Ride List</a> <!-- Link to the ride list -->
+
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 to-sky-50 px-4">
+
+  <div class="w-full max-w-5xl bg-white rounded-3xl shadow-xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
+
+    <!-- LEFT CONTENT -->
+    <div class="p-10 flex flex-col justify-center text-left">
+      <span class="text-sm font-semibold text-orange-500 uppercase tracking-wide mb-2">
+        BuddyRide
+      </span>
+
+      <h2 class="text-4xl font-extrabold text-orange-700 leading-tight mb-4">
+        Thank you!
+      </h2>
+
+      <p class="text-gray-600 text-lg mb-6">
+        Your ride has been successfully published.  
+        You’re helping others travel smarter, faster, and affordably.
+      </p>
+
+      <p class="text-gray-500 mb-8">
+        You can now manage your ride, view bookings, and track responses from passengers.
+      </p>
+
+      <div class="flex flex-wrap gap-4">
+        <a
+          routerLink="/published"
+          class="inline-flex items-center justify-center px-6 py-3 rounded-xl
+                 bg-orange-600 text-white font-semibold
+                 hover:bg-orange-700 transition"
+        >
+          View Ride List
+        </a>
+
+        <a
+          routerLink="/home"
+          class="inline-flex items-center justify-center px-6 py-3 rounded-xl
+                 border border-orange-600 text-orange-700 font-semibold
+                 hover:bg-orange-50 transition"
+        >
+          Go to Home
+        </a>
+      </div>
+    </div>
+
+    <!-- RIGHT ILLUSTRATION -->
+    <div class="hidden md:flex items-center justify-center bg-gradient-to-br from-orange-100 to-orange-50 p-8">
+      <img
+        src="/assets/images/thank-you.png"
+        alt="Thank you illustration"
+        class="w-full max-w-sm object-contain"
+      />
+    </div>
+
   </div>
-  
+</div>

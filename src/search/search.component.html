@@ -1,33 +1,33 @@
 <!-- SEARCH BAR -->
-<div class="flex flex-col sm:flex-row flex-wrap bg-white h-auto px-2 py-2 w-full mx-auto items-center space-y-2 sm:space-y-0 sm:space-x-2">
+<div class="flex flex-col sm:flex-row flex-wrap bg-white h-auto px-4 py-4 w-full mx-auto items-center gap-3 shadow-md rounded-2xl border border-gray-200">
 
   <!-- FROM -->
-  <div class="flex items-center gap-2 px-3 py-2 flex-1 w-full border border-gray-200 rounded-md">
-    <span class="text-gray-500 text-lg">🧭</span>
+  <div class="flex items-center gap-2 px-3 py-2 flex-1 w-full border border-gray-200 rounded-lg focus-within:ring-2 focus-within:ring-sky-400 transition">
+    <span class="text-gray-400 text-lg"><i class="fa-solid fa-location-dot"></i></span>
     <input
       #fromInput
       type="text"
       [(ngModel)]="from"
       placeholder="Leaving from"
-      class="bg-transparent outline-none text-sm text-gray-700 w-full"
+      class="bg-transparent outline-none text-sm text-gray-700 w-full placeholder-gray-400"
     />
   </div>
 
   <!-- TO -->
-  <div class="flex items-center gap-2 px-3 py-2 flex-1 w-full border border-gray-200 rounded-md">
-    <span class="text-gray-500 text-lg">📍</span>
+  <div class="flex items-center gap-2 px-3 py-2 flex-1 w-full border border-gray-200 rounded-lg focus-within:ring-2 focus-within:ring-sky-400 transition">
+    <span class="text-gray-400 text-lg"><i class="fa-solid fa-location-dot"></i></span>
     <input
       #toInput
       type="text"
       [(ngModel)]="to"
       placeholder="Going to"
-      class="bg-transparent outline-none text-sm text-gray-700 w-full"
+      class="bg-transparent outline-none text-sm text-gray-700 w-full placeholder-gray-400"
     />
   </div>
 
   <!-- DATE -->
-  <div class="flex items-center gap-2 px-3 py-2 flex-1 w-full border border-gray-200 rounded-md">
-    <span class="text-gray-500 text-lg">📅</span>
+  <div class="flex items-center gap-2 px-3 py-2 flex-1 w-full border border-gray-200 rounded-lg focus-within:ring-2 focus-within:ring-sky-400 transition">
+    <span class="text-gray-400 text-lg"><i class="fa-solid fa-calendar"></i></span>
     <input
       type="date"
       [(ngModel)]="selectedDate"
@@ -36,19 +36,19 @@
   </div>
 
   <!-- PASSENGER -->
-  <div class="flex items-center gap-2 px-3 py-2 flex-1 w-full border border-gray-200 rounded-md">
+  <div class="flex items-center gap-3 px-3 py-2 flex-1 w-full border border-gray-200 rounded-lg justify-center">
     <button
-      class="w-8 h-8 flex items-center justify-center border border-gray-300 text-xl text-gray-400 disabled:opacity-30"
+      class="w-8 h-8 flex items-center justify-center border border-gray-300 text-gray-400 text-lg rounded hover:bg-gray-100 disabled:opacity-30 transition"
       (click)="decrease()"
       [disabled]="passengerCount <= 1"
     >
       &minus;
     </button>
 
-    <span class="text-gray-800 font-medium text-sm">{{ passengerCount }}</span>
+    <span class="text-gray-800 font-semibold text-sm">{{ passengerCount }}</span>
 
     <button
-      class="w-8 h-8 flex items-center justify-center border border-blue-500 text-blue-500 text-xl hover:bg-blue-50 transition"
+      class="w-8 h-8 flex items-center justify-center border border-sky-500 text-sky-500 text-lg rounded hover:bg-sky-50 transition"
       (click)="increase()"
     >
       &#43;
@@ -57,62 +57,81 @@
 
   <!-- SEARCH BUTTON -->
   <button
-   type="button"
+    type="button"
     (click)="searchRides()"
-    class="bg-sky-500 hover:bg-sky-600 text-white font-semibold px-6 py-2 rounded-md text-sm transition self-start sm:self-auto"
+    class="bg-orange-700 hover:bg-orange-800 text-white disabled:bg-gray-400  font-semibold px-6 py-2 rounded-lg text-sm transition self-start sm:self-auto shadow-md"
   >
     Search
   </button>
 </div>
 
 <!-- LOADER -->
-<div *ngIf="isSearching" class="flex justify-center items-center min-h-[200px] mt-4 w-full">
+<div *ngIf="isSearching" class="flex justify-center items-center min-h-[200px] mt-6 w-full">
   <img
     src="../assets/images/original-a13912f45623da52a215e6a1def2aac3.gif"
     alt="Searching..."
-    class="w-30 h-24"
+    class="w-32 h-24"
   />
 </div>
 
 <!-- AVAILABLE RIDES -->
-<div *ngIf="!isSearching && rides.length > 0" class="mt-6 w-full max-w-6xl mx-auto px-4">
-  <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
-    🚗 Available Rides
+<div *ngIf="!isSearching && rides.length > 0" class="mt-8 w-full max-w-6xl mx-auto px-4 mb-2">
+
+  <!-- Section Title -->
+  <h2 class="text-3xl font-bold text-orange-600 mb-8 text-center flex items-center justify-center gap-2">
+    <i class="fas fa-car-side"></i> Available Rides
   </h2>
 
-  <div
-    *ngFor="let ride of rides"
-    (click)="openRideDetailModal(ride)"
-    class="p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-200 mb-6 border border-gray-100 cursor-pointer w-full"
-  >
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700">
-      <div>
-        <p class="text-sm font-medium text-gray-500">From</p>
-        <p class="text-lg font-semibold">{{ ride.from_location }}</p>
+  <!-- Ride Cards -->
+  <div *ngFor="let ride of rides" 
+       (click)="openRideDetailModal(ride)"
+       class="p-6 bg-white rounded-3xl shadow-md hover:shadow-xl border border-orange-100 cursor-pointer w-full transition duration-300 hover:scale-[1.02]">
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-gray-700">
+
+      <!-- From Location -->
+      <div class="flex items-center gap-2">
+        <i class="fas fa-map-marker-alt text-orange-500 text-lg"></i>
+        <div>
+          <p class="text-xs font-medium text-gray-400">From</p>
+          <p class="text-lg font-semibold text-gray-800">{{ ride.from_location }}</p>
+        </div>
       </div>
 
-      <div>
-        <p class="text-sm font-medium text-gray-500">To</p>
-        <p class="text-lg font-semibold">{{ ride.to_location }}</p>
+      <!-- To Location -->
+      <div class="flex items-center gap-2">
+        <i class="fas fa-map-pin text-red-500 text-lg"></i>
+        <div>
+          <p class="text-xs font-medium text-gray-400">To</p>
+          <p class="text-lg font-semibold text-gray-800">{{ ride.to_location }}</p>
+        </div>
       </div>
 
-      <div>
-        <p class="text-sm font-medium text-gray-500">Date and Time</p>
-        <p class="text-lg">
-          <span class="font-bold">Date:</span>
-          {{ ride.date | date: 'mediumDate' }}
-          <span class="font-bold ml-2">Time:</span>
-          {{ ride.time }}
-        </p>
+      <!-- Date & Time -->
+      <div class="flex items-center gap-2">
+        <i class="far fa-calendar-alt text-blue-500 text-lg"></i>
+        <div>
+          <p class="text-xs font-medium text-gray-400">Date & Time</p>
+          <p class="text-lg text-gray-800">
+            <span class="font-semibold">Date:</span> {{ ride.date | date: 'mediumDate' }}
+            <span class="font-semibold ml-2">Time:</span> {{ ride.time }}
+          </p>
+        </div>
       </div>
 
-      <div>
-        <p class="text-sm font-medium text-gray-500">Seats Available</p>
-        <p class="text-lg font-semibold">{{ ride.passengers }}</p>
+      <!-- Seats Available -->
+      <div class="flex items-center gap-2">
+        <i class="fas fa-user-friends text-green-500 text-lg"></i>
+        <div>
+          <p class="text-xs font-medium text-gray-400">Seats Available</p>
+          <p class="text-lg font-semibold text-gray-800">{{ ride.passengers }}</p>
+        </div>
       </div>
+
     </div>
   </div>
 </div>
+
 
 <!-- NO RIDES FOUND -->
 <div *ngIf="!isSearching && rides.length === 0" class="text-center text-gray-500 mt-10 w-full">

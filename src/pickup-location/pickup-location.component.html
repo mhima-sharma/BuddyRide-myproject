@@ -1,114 +1,110 @@
-<app-header ></app-header>
+<app-header></app-header>
 
-
-
-<div  class=" gap-8 xl:gap-12 pt-20 pb-20 px-4 xl:px-12" *ngIf="!isProfileComplete" >
-<div 
-  class="mx-5 xl:mx-12 mb-6 flex items-start gap-10 xl:gap-14 pt-20 pb-20 px-5 xl:px-12
-         rounded-xl border border-red-200 bg-gradient-to-r from-red-50 to-white
-         shadow-sm"
-       
->
-  <!-- Icon -->
-  <div class="flex-shrink-0">
-    <div class="h-10 w-10 flex items-center justify-center
-                rounded-full bg-red-100 text-red-600 text-xl">
-      ⚠️
+<!-- PROFILE INCOMPLETE ALERT -->
+<div *ngIf="!isProfileComplete" class="pt-24 pb-12 px-4 xl:px-12">
+  <div
+    class="mx-auto mb-6 flex flex-col sm:flex-row items-start gap-6 sm:gap-10
+           p-6 sm:p-8 rounded-xl border border-red-200
+           bg-gradient-to-r from-red-50 to-white shadow-md max-w-4xl"
+  >
+    <!-- Icon -->
+    <div class="flex-shrink-0">
+      <div class="h-12 w-12 flex items-center justify-center
+                  rounded-full bg-red-100 text-red-600 text-2xl">
+        ⚠️
+      </div>
     </div>
-  </div>
 
-  <!-- Text -->
-  <div class="flex-1">
-    <p class="text-base font-semibold text-red-700">
-      Profile incomplete
-    </p>
-    <p class="text-sm text-red-600 mt-1 leading-relaxed">
-      Some required details are missing in your profile.
-      Please complete your profile to continue publishing a ride.
-    </p>
+    <!-- Text -->
+    <div class="flex-1">
+      <p class="text-lg font-semibold text-red-700">Profile incomplete</p>
+      <p class="text-sm text-red-600 mt-1 leading-relaxed">
+        Some required details are missing in your profile.
+        Please complete your profile to continue publishing a ride.
+      </p>
 
-    <!-- Action -->
-    <div class="mt-4">
-      <button
-        routerLink="/profile"
-        class="inline-flex items-center gap-2 px-4 py-2
-               bg-red-600 text-white text-sm font-medium
-               rounded-lg hover:bg-red-700 transition"
-      >
-        Complete Profile
-        <span>→</span>
-      </button>
+      <!-- Action Button -->
+      <div class="mt-4">
+        <button
+          routerLink="/profile"
+          class="inline-flex items-center gap-2 px-5 py-2
+                 bg-red-600 text-white text-sm font-medium
+                 rounded-lg hover:bg-red-700 transition shadow-sm"
+        >
+          Complete Profile
+          <span>→</span>
+        </button>
+      </div>
     </div>
   </div>
 </div>
-</div>
-<!-- Container -->
-<div *ngIf="isProfileComplete" class="flex flex-col xl:flex-row gap-8 xl:gap-12 pt-20 pb-20 px-4 xl:px-12">
 
-  <!-- Left Column: Map -->
+<!-- MAIN CONTAINER -->
+<div *ngIf="isProfileComplete" class="flex flex-col xl:flex-row gap-8 xl:gap-12 pt-24 pb-12 px-4 xl:px-12">
+
+  <!-- LEFT COLUMN: MAP -->
   <div class="flex-1">
-    <div id="map" class="h-[500px] w-full rounded-xl shadow-md border border-gray-200"></div>
+    <div id="map" class="h-[500px] w-full rounded-xl shadow-lg border border-gray-200"></div>
   </div>
 
-  <!-- Right Column: Controls -->
+  <!-- RIGHT COLUMN: CONTROLS -->
   <div class="flex-1 space-y-6">
 
-    <!-- Address Inputs -->
+    <!-- ADDRESS INPUTS -->
     <div class="space-y-4">
       <div>
-        <h3 class="text-lg font-semibold text-gray-800">Pickup Location</h3>
+        <h3 class="text-lg font-semibold text-gray-800 mb-1">Pickup Location</h3>
         <input
           type="text"
           [(ngModel)]="pickupAddress"
           #locationInput
           placeholder="Enter Pickup Address"
-          class="w-full px-4 py-2 border rounded-md shadow-sm"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-orange-400 outline-none transition"
         />
       </div>
 
       <div>
-        <h3 class="text-lg font-semibold text-gray-800">Dropoff Location</h3>
+        <h3 class="text-lg font-semibold text-gray-800 mb-1">Dropoff Location</h3>
         <input
           type="text"
           [(ngModel)]="dropoffAddress"
           #DropoffInput
           placeholder="Enter Dropoff Address"
-          class="w-full px-4 py-2 border rounded-md shadow-sm"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-orange-400 outline-none transition"
         />
       </div>
 
       <button
         (click)="calculateRoute()"
         [disabled]="!isProfileComplete"
-        class="w-full px-6 py-2 font-semibold text-white rounded
+        class="w-full px-6 py-2 font-semibold text-white rounded-lg
                bg-orange-700 hover:bg-orange-800
-               disabled:bg-gray-400 disabled:cursor-not-allowed"
+               disabled:bg-gray-400 disabled:cursor-not-allowed transition shadow"
       >
         Show Route
       </button>
     </div>
 
-    <!-- Routes List -->
+    <!-- ROUTES LIST -->
     <div *ngIf="routes.length > 0">
-      <h3 class="text-lg font-semibold text-gray-800">Select a Route:</h3>
-      <ul class="mt-2 space-y-2">
+      <h3 class="text-lg font-semibold text-gray-800 mb-2">Select a Route:</h3>
+      <ul class="space-y-2">
         <li
           *ngFor="let route of routes; let i = index"
           (click)="selectRoute(i)"
-          class="cursor-pointer px-4 py-2 rounded border hover:bg-blue-100"
+          class="cursor-pointer px-4 py-2 rounded-lg border hover:bg-blue-50 transition"
           [class.font-bold]="i === selectedRouteIndex"
           [class.bg-blue-50]="i === selectedRouteIndex"
         >
-          Route {{ i + 1 }} — {{ route.legs[0].distance.text }}
-          ({{ route.legs[0].duration.text }})
+          Route {{ i + 1 }} — {{ route.legs[0].distance.text }} ({{ route.legs[0].duration.text }})
         </li>
       </ul>
     </div>
 
-    <!-- Stop Points -->
+    <!-- STOP POINTS -->
     <div *ngIf="stopPoints.length > 0">
-      <h3 class="text-lg font-semibold text-gray-800">Select a Stop Point:</h3>
-      <form class="mt-2 space-y-2">
+      <h3 class="text-lg font-semibold text-gray-800 mb-2">Select a Stop Point:</h3>
+      <form class="space-y-2">
         <div *ngFor="let point of stopPoints" class="flex items-center space-x-3">
           <input
             type="radio"
@@ -116,7 +112,7 @@
             [value]="point.id"
             [(ngModel)]="selectedStop.id"
             (change)="selectStop(point)"
-            class="accent-blue-600"
+            class="accent-orange-600"
           />
           <label class="text-gray-700">
             <strong>Stop {{ point.id + 1 }}:</strong> {{ point.instruction }}
@@ -125,18 +121,18 @@
       </form>
     </div>
 
-    <!-- Add Custom Stop -->
+    <!-- CUSTOM STOP -->
     <div class="space-y-4">
       <input
         type="text"
         [(ngModel)]="customStop"
         placeholder="Enter custom stop"
-        class="w-full px-4 py-2 border rounded-md"
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-orange-400 outline-none transition"
       />
 
       <button
         (click)="addCustomStop()"
-        class="w-full px-6 py-2 bg-orange-700 text-white rounded hover:bg-orange-800"
+        class="w-full px-6 py-2 bg-orange-700 text-white rounded-lg hover:bg-orange-800 transition shadow"
       >
         Add Stop
       </button>
@@ -144,9 +140,9 @@
       <button
         (click)="saveStopPoint()"
         [disabled]="!isProfileComplete"
-        class="w-full px-6 py-2 bg-orange-700 text-white rounded
+        class="w-full px-6 py-2 bg-orange-700 text-white rounded-lg
                hover:bg-orange-800
-               disabled:bg-gray-400 disabled:cursor-not-allowed"
+               disabled:bg-gray-400 disabled:cursor-not-allowed transition shadow"
       >
         Save Stop Point
       </button>
