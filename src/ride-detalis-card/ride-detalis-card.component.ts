@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
 import { FooterComponent } from "../footer/footer.component";
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -10,19 +10,34 @@ import { RideService } from '../services/ride.service';
 @Component({
   selector: 'app-ride-detalis-card',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, CommonModule, FormsModule, RouterLink],
+  imports: [
+    HeaderComponent,
+    FooterComponent,
+    CommonModule,
+    FormsModule,
+    RouterLink
+  ],
   templateUrl: './ride-detalis-card.component.html',
   styleUrls: ['./ride-detalis-card.component.css']
-})  
+})
 export class RideDetalisCardComponent implements OnInit {
-  ride: any;
 
-  constructor(private route: ActivatedRoute, private rideService: RideService, private http: HttpClient) {}
+  ride: any = null;
+
+  isProfileComplete = false;
+  profileChecked = false;
+
+  constructor(
+    private route: ActivatedRoute,
+    private rideService: RideService,
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      const rideId = params['rideId'];
-      const driverId = params['driverId'];
+      const rideId = +params['rideId'];
+      const driverId = +params['driverId'];
       const emailId = params['emailId'];
 
       if (!rideId || !driverId || !emailId) {
@@ -30,72 +45,89 @@ export class RideDetalisCardComponent implements OnInit {
         return;
       }
 
-      this.getRideFromCache(+rideId, +driverId, emailId);
+      this.getRideFromCache(rideId, driverId, emailId);
     });
+
+    this.checkProfileCompletion();
   }
 
-  /**
-   * Get ride details from RideService cache instead of backend
-   */
-  // getRideFromCache(rideId: number, driverId: number, emailId: string) {
-  //   const rides = this.rideService.getRides();
-  //   const foundRide = rides.find(r =>
-  //     r.ride_id === rideId &&
-  //     r.publisher_id === driverId &&
-  //     r.publisher_email === emailId
-  //   );
+  // ================= PROFILE CHECK (REUSABLE) =================
+  checkProfileCompletion(callback?: (isComplete: boolean) => void): void {
+    const token = localStorage.getItem('authToken');
 
-  //   if (foundRide) {
-  //     this.ride = foundRide;
-  //     console.log('Ride Details (from cache):', this.ride);
-  //   } else {
-  //     console.warn('Ride not found in cached search results.');
-  //     this.ride = null; // optional: show a "Ride not found" message in UI
-  //   }
-  // }
-getRideFromCache(rideId: number, driverId: number, emailId: string) {
-  // Parse cached rides safely; default to empty array if null
-  const rides = JSON.parse(localStorage.getItem('cachedRides') || '[]') as any[];
+    if (!token) {
+      this.profileChecked = true;
+      callback?.(false);
+      return;
+    }
 
-  // Now rides is always an array
-  const foundRide = rides.find(r =>
-    r.ride_id === rideId &&
-    r.publisher_id === driverId &&
-    r.publisher_email === emailId
-  );
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${token}`
+    );
 
-  if (foundRide) {
-    this.ride = foundRide;
-    console.log('Ride Details (from cache):', this.ride);
-  } else {
-    console.warn('Ride not found in cached search results.');
-    this.ride = null; // optional: show a "Ride not found" message in UI
-  }
-}
-
-
-  /**
-   * Send ride request
-   */
-  requestRide() {
-    if (!this.ride) return;
-
-    const token = localStorage.getItem('authToken') || '';
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
-    const body = {
-      rideId: this.ride.ride_id,
-      driverId: this.ride.publisher_id,
-      to: this.ride.publisher_email
-    };
-
-    this.http.post(
-      'https://backend-bla-bla.onrender.com/api/ride-requests/create',
-      body,
+    this.http.get<any>(
+      'https://backend-bla-bla.onrender.com/api/auth/user/updated/profile',
       { headers }
     ).subscribe({
-      next: () => alert('Ride request sent to driver.'),
-      error: () => alert('Failed to send ride request.')
+      next: (user) => {
+        this.isProfileComplete =
+          !!user?.address &&
+          !!user?.dob &&
+          !!user?.gender &&
+          !!user?.phone &&
+          !!user?.aadhar_file;
+
+        this.profileChecked = true;
+        callback?.(this.isProfileComplete);
+      },
+      error: () => {
+        this.profileChecked = true;
+        callback?.(false);
+      }
     });
   }
+  // ============================================================
+
+  // ================= GET RIDE FROM CACHE =================
+  getRideFromCache(rideId: number, driverId: number, emailId: string) {
+    const rides = JSON.parse(
+      localStorage.getItem('cachedRides') || '[]'
+    );
+
+    this.ride = rides.find((r: any) =>
+      r.ride_id === rideId &&
+      r.publisher_id === driverId &&
+      r.publisher_email === emailId
+    ) || null;
+
+    if (!this.ride) {
+      console.warn('Ride not found in cached data');
+    }
+  }
+  // ======================================================
+
+  // ================= REQUEST RIDE =================
+  requestRide(): void {
+    if (!this.ride) return;
+
+    this.checkProfileCompletion((isComplete) => {
+
+      if (!isComplete) {
+        alert('Please complete your profile to continue booking');
+        this.router.navigate(['/profile']);
+        return;
+      }
+
+      // ✅ profile complete → booking page
+      this.router.navigate(['/book'], {
+        queryParams: {
+          rideId: this.ride.ride_id,
+          driverId: this.ride.publisher_id
+        }
+      });
+
+    });
+  }
+  // ======================================================
 }

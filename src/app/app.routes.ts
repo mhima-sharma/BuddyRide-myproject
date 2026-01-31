@@ -23,7 +23,6 @@ import { FirstPageComponent } from '../first-page/first-page.component';
 import { TermsAndConditionComponent } from '../pages/terms-and-condition/terms-and-condition.component';
 import { BlogComponent } from '../pages/blog/blog.component';
 import { SafetyTrustComponent } from '../pages/safety-trust/safety-trust.component';
-import { PublishrideCalanderComponent } from '../publishride-calander/publishride-calander.component';
 import { PublishrideTimeComponent } from '../publishride-time/publishride-time.component';
 import { ThankyouPageComponent } from '../thankyou-page/thankyou-page.component';
 import { RideDetalisCardComponent } from '../ride-detalis-card/ride-detalis-card.component';
@@ -54,7 +53,6 @@ export const routes: Routes = [
     { path: 'term-cond', component: TermsAndConditionComponent},
     { path: 'blog', component: BlogComponent},
     { path: 'safety', component: SafetyTrustComponent},
-    { path: 'calander', component:PublishrideCalanderComponent},
     { path: 'time', component: PublishrideTimeComponent},
     { path: 'thanks', component: ThankyouPageComponent},
     { path: 'ride-detail', component: RideDetalisCardComponent},
