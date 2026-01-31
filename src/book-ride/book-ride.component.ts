@@ -20,6 +20,9 @@ export class BookRideComponent implements OnInit {
   rider: any = null;
   loading: boolean = false;
 
+  // 🔹 Seats
+  selectedSeats: number = 1;
+
   // 🔹 Map iframe
   mapUrl!: SafeResourceUrl;
 
@@ -63,8 +66,26 @@ export class BookRideComponent implements OnInit {
     const to = encodeURIComponent(this.ride.to_location);
 
     const url = `https://www.openstreetmap.org/export/embed.html?search=${from}%20to%20${to}&layer=mapnik`;
-
     this.mapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
+  // ================= SEAT CONTROLS =================
+  increaseSeats() {
+    if (this.selectedSeats < this.ride.available_seats) {
+      this.selectedSeats++;
+    }
+  }
+
+  decreaseSeats() {
+    if (this.selectedSeats > 1) {
+      this.selectedSeats--;
+    }
+  }
+
+  // ================= TOTAL AMOUNT =================
+  get totalAmount(): number {
+    const pricePerSeat = this.ride?.location_price || 0;
+    return pricePerSeat * this.selectedSeats;
   }
 
   // ================= CONFIRM BOOKING =================
@@ -80,20 +101,26 @@ export class BookRideComponent implements OnInit {
     );
 
     const body = {
-  ride_id: this.ride.ride_id,
-  driver_id: this.ride.publisher_id,
-  rider_id: this.rider.id,
-  from_location: this.ride.from_location,
-  to_location: this.ride.to_location,
-  date: this.ride.date,
-  time: this.ride.time,
-  price: this.ride.location_price || 0,
-  status: 'pending',
-  rider_name: this.rider.name,
-  rider_email: this.rider.email,
-  driver_email: this.ride.publisher_email
-};
+      ride_id: this.ride.ride_id,
+      driver_id: this.ride.publisher_id,
+      rider_id: this.rider.id,
 
+      from_location: this.ride.from_location,
+      to_location: this.ride.to_location,
+      date: this.ride.date,
+      time: this.ride.time,
+
+      // 🔹 PRICING
+      price_per_seat: this.ride.location_price || 0,
+      seats_booked: this.selectedSeats,
+      total_amount: this.totalAmount,
+
+      status: 'pending',
+
+      rider_name: this.rider.name,
+      rider_email: this.rider.email,
+      driver_email: this.ride.publisher_email
+    };
 
     this.http.post(
       'https://backend-bla-bla.onrender.com/api/bookings/create',
@@ -105,7 +132,7 @@ export class BookRideComponent implements OnInit {
         this.router.navigate(['/my-bookings']);
       },
       error: () => {
-        alert('Failed to create bookingyyyyy');
+        alert('Failed to create booking');
         this.loading = false;
       }
     });

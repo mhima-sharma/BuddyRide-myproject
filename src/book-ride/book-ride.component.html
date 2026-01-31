@@ -1,13 +1,11 @@
 <app-header></app-header>
-<div class="min-h-screen from-orange-50 to-gray-100 flex justify-center px-4 py-10">
 
+<div class="min-h-screen from-orange-50 to-gray-100 flex justify-center px-4 py-10">
   <div class="w-full max-w-4xl bg-white rounded-3xl shadow-xl overflow-hidden">
 
     <!-- TOP HEADER -->
     <div class="px-6 py-5 border-b">
-      <h2 class="text-2xl font-bold text-gray-800">
-        Confirm Your Ride
-      </h2>
+      <h2 class="text-2xl font-bold text-gray-800">Confirm Your Ride</h2>
       <p class="text-sm text-gray-500 mt-1">
         One step away from booking your BuddyRide
       </p>
@@ -16,28 +14,24 @@
     <!-- ROUTE STRIP -->
     <div class="px-6 py-4 bg-orange-100 text-black flex flex-col sm:flex-row sm:items-center sm:justify-between">
       <div class="text-lg font-semibold">
-        {{ ride?.from_location }}
-        <span class="mx-2">→</span>
-        {{ ride?.to_location }}
+        {{ ride?.from_location }} <span class="mx-2">→</span> {{ ride?.to_location }}
       </div>
-    
 
       <div class="mt-2 sm:mt-0 text-sm opacity-90">
-        ₹{{ ride?.location_price || 0 }} • {{ ride?.date | date }} • {{ ride?.time }}
+        ₹{{ ride?.location_price || 0 }} / person • {{ ride?.date | date }} • {{ ride?.time }}
       </div>
     </div>
-      <div class="w-full h-64 rounded-xl overflow-hidden border">
-        <iframe
-          width="100%"
-          height="100%"
-          margintop="20"
-          frameborder="0"
-          scrolling="no"
-          marginheight="0"
-          marginwidth="0"
-          [src]="mapUrl">
-        </iframe>
-      </div>
+
+    <!-- MAP -->
+    <div class="w-full h-64 rounded-xl overflow-hidden border">
+      <iframe
+        width="100%"
+        height="100%"
+        frameborder="0"
+        scrolling="no"
+        [src]="mapUrl">
+      </iframe>
+    </div>
 
     <!-- BODY -->
     <div class="p-6 space-y-6">
@@ -47,10 +41,7 @@
 
         <!-- DRIVER -->
         <div class="border rounded-2xl p-5 hover:shadow transition">
-          <h3 class="font-semibold text-gray-800 mb-3 flex items-center gap-2">
-            🚗 Driver
-          </h3>
-
+          <h3 class="font-semibold text-gray-800 mb-3">🚗 Driver</h3>
           <div class="space-y-2 text-sm text-gray-600">
             <p><strong>Name:</strong> {{ ride?.publisher_name }}</p>
             <p><strong>Email:</strong> {{ ride?.publisher_email }}</p>
@@ -60,10 +51,7 @@
 
         <!-- RIDER -->
         <div class="border rounded-2xl p-5 hover:shadow transition">
-          <h3 class="font-semibold text-gray-800 mb-3 flex items-center gap-2">
-            🙋 You
-          </h3>
-
+          <h3 class="font-semibold text-gray-800 mb-3">🙋 You</h3>
           <div class="space-y-2 text-sm text-gray-600">
             <p><strong>Name:</strong> {{ rider?.name }}</p>
             <p><strong>Email:</strong> {{ rider?.email }}</p>
@@ -72,29 +60,55 @@
 
       </div>
 
+      <!-- SEAT SELECTION -->
+      <div class="border rounded-2xl p-5">
+        <h3 class="font-semibold text-gray-800 mb-3">👥 Number of People</h3>
+
+        <div class="flex items-center gap-4">
+          <button
+            (click)="decreaseSeats()"
+            [disabled]="selectedSeats <= 1"
+            class="px-4 py-2 rounded-lg border text-lg">
+            −
+          </button>
+
+          <span class="text-xl font-bold">{{ selectedSeats }}</span>
+
+          <button
+            (click)="increaseSeats()"
+            [disabled]="selectedSeats >= ride?.available_seats"
+            class="px-4 py-2 rounded-lg border text-lg">
+            +
+          </button>
+        </div>
+
+        <p class="text-sm text-gray-500 mt-2">
+          Available seats: {{ ride?.available_seats }}
+        </p>
+      </div>
+
       <!-- RIDE INFO -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
 
         <div class="bg-gray-50 rounded-xl py-4">
-          <div class="text-xs text-gray-400">Date</div>
-          <div class="font-semibold">{{ ride?.date | date }}</div>
-        </div>
-
-        <div class="bg-gray-50 rounded-xl py-4">
-          <div class="text-xs text-gray-400">Time</div>
-          <div class="font-semibold">{{ ride?.time }}</div>
-        </div>
-
-        <div class="bg-gray-50 rounded-xl py-4">
-          <div class="text-xs text-gray-400">Price</div>
+          <div class="text-xs text-gray-400">Price / Person</div>
           <div class="font-semibold text-orange-600">
             ₹{{ ride?.location_price || 0 }}
           </div>
         </div>
 
         <div class="bg-gray-50 rounded-xl py-4">
-          <div class="text-xs text-gray-400">Ride ID</div>
-          <div class="font-semibold">#{{ ride?.ride_id }}</div>
+          <div class="text-xs text-gray-400">Seats</div>
+          <div class="font-semibold">
+            {{ selectedSeats }}
+          </div>
+        </div>
+
+        <div class="bg-gray-50 rounded-xl py-4 col-span-2">
+          <div class="text-xs text-gray-400">Total Amount</div>
+          <div class="font-bold text-green-600 text-lg">
+            ₹{{ totalAmount }}
+          </div>
         </div>
 
       </div>
@@ -121,4 +135,5 @@
 
   </div>
 </div>
+
 <app-footer></app-footer>
