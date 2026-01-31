@@ -1,14 +1,10 @@
-<!-- Trigger -->
-<!-- <button (click)="showModal = true" class="bg-red-600 text-white px-4 py-2 rounded">Logout</button> -->
-
-<!-- Modal -->
-<div  class="fixed inset-0 flex items-center justify-center " style="background-image: url('../assets/images/dashboard-img.png');">
+<div class="fixed inset-0 flex items-center justify-center" style="background-image: url('../assets/images/dashboard-img.png');">
   <div class="bg-white rounded-lg p-6 w-96 shadow-lg">
     <h2 class="text-xl font-semibold mb-4">Confirm Logout</h2>
     <p class="mb-6">Are you sure you want to logout?</p>
     <div class="flex justify-end space-x-2">
-      <button class="px-4 py-2 bg-gray-300 rounded" routerLink="/home" >Cancel</button>
-      <button class="px-4 py-2 bg-red-600 text-white rounded" routerLink="/login" >Logout</button>
+      <button class="px-4 py-2 bg-gray-300 rounded" routerLink="/home">Cancel</button>
+      <button class="px-4 py-2 bg-red-600 text-white rounded" (click)="confirmLogout()">Logout</button>
     </div>
   </div>
 </div>

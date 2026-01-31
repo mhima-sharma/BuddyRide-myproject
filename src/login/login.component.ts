@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -8,27 +8,39 @@ import {
   Validators
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { AuthServiceService } from '../services/auth-service.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule ,ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   showPassword = true;
 
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private authService: AuthServiceService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
+  }
+
+  ngOnInit() {
+    // Auto-login if token exists
+    const token = localStorage.getItem('authToken');
+    const user = localStorage.getItem('user');
+    if (token && user) {
+      this.authService.setUserLoggedIn(JSON.parse(user));
+      this.router.navigate(['/home']); // redirect to home if already logged in
+    }
   }
 
   togglePassword() {
@@ -48,8 +60,14 @@ export class LoginComponent {
       )
       .subscribe({
         next: (res: any) => {
+          // Save token & user in localStorage for persistent login
           localStorage.setItem('authToken', res.token);
           localStorage.setItem('user', JSON.stringify(res.user));
+
+          // Update AuthService state
+          this.authService.setUserLoggedIn(res.user);
+
+          // Navigate to home
           this.router.navigate(['/home']);
         },
         error: (err) => {
