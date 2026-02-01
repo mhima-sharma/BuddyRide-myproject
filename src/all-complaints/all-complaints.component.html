@@ -1,0 +1,64 @@
+
+<app-header></app-header>
+
+<div class="p-6 bg-gray-100 min-h-screen">
+
+  <!-- Page Title -->
+  <h2 class="text-2xl font-bold mb-6 text-gray-800">
+    Complaints Management
+  </h2>
+
+  <!-- Complaints Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+    <!-- Complaint Card -->
+    <div
+      *ngFor="let complaint of complaints"
+      class="bg-white rounded-xl shadow-md p-5 border-l-4"
+      [ngClass]="complaint.status === 'resolved' ? 'border-green-500' : 'border-yellow-500'"
+    >
+
+      <!-- Header -->
+      <div class="flex justify-between items-center mb-3">
+        <span class="text-sm text-gray-500">
+          ID #{{ complaint.id }}
+        </span>
+
+        <span
+          class="px-3 py-1 text-xs font-semibold rounded-full"
+          [ngClass]="complaint.status === 'resolved'
+            ? 'bg-green-100 text-green-700'
+            : 'bg-yellow-100 text-yellow-700'"
+        >
+          {{ complaint.status | titlecase }}
+        </span>
+      </div>
+
+      <!-- Message -->
+      <p class="text-gray-700 text-sm leading-relaxed mb-4">
+        {{ complaint.user_message }}
+      </p>
+
+      <!-- Footer -->
+      <div class="flex justify-between items-center">
+        <span class="text-xs text-gray-400">
+          {{ complaint.timestamp | date:'medium' }}
+        </span>
+
+     
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Empty State -->
+  <div
+    *ngIf="complaints.length === 0"
+    class="text-center text-gray-500 mt-10"
+  >
+    No complaints found
+  </div>
+
+</div>
+
+<app-footer></app-footer>

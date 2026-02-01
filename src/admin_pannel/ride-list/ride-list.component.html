@@ -1,0 +1,69 @@
+<div class="p-6 bg-gray-100 min-h-screen">
+  <h2 class="text-2xl font-bold mb-4">All Rides</h2>
+
+  <!-- Search input -->
+  <input
+    type="text"
+    [(ngModel)]="searchText"
+    (input)="searchRides()"
+    placeholder="Search rides..."
+    class="mb-6 p-2 border border-gray-300 rounded w-full md:w-1/3"
+  />
+
+  <!-- Loader -->
+  <div *ngIf="loading" class="text-center py-10 text-gray-500">
+    Loading rides...
+  </div>
+
+  <!-- Empty state -->
+  <div *ngIf="!loading && filteredRides.length === 0" class="text-center py-10 text-gray-400">
+    No rides found
+  </div>
+
+  <!-- Cards -->
+  <div *ngIf="!loading && filteredRides.length > 0" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <div *ngFor="let ride of filteredRides" class="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow duration-300">
+      <div class="flex justify-between items-center mb-2">
+        <h3 class="font-bold text-lg text-orange-600">Ride ID: {{ ride.ride_id }}</h3>
+        <span
+          class="text-sm font-semibold px-2 py-1 rounded-full"
+          [ngClass]="{
+            'bg-green-100 text-green-700': ride.status.toLowerCase() === 'accepted',
+            'bg-yellow-100 text-yellow-700': ride.status.toLowerCase() === 'pending',
+            'bg-red-100 text-red-700': ride.status.toLowerCase() === 'rejected'
+          }"
+        >
+          {{ ride.status }}
+        </span>
+      </div>
+
+      <div class="mb-2 text-gray-700">
+        <p><span class="font-semibold">Driver ID:</span> {{ ride.driver_id }}</p>
+        <p><span class="font-semibold">Rider ID:</span> {{ ride.rider_id }}</p>
+        <p><span class="font-semibold">Rider Email:</span> {{ ride.rider_email || '-' }}</p>
+      </div>
+
+      <div class="mb-2 text-gray-700">
+        <p><span class="font-semibold">From:</span> {{ ride.from_location }}</p>
+        <p><span class="font-semibold">To:</span> {{ ride.to_location }}</p>
+      </div>
+
+      <div class="mb-2 text-gray-700">
+        <p><span class="font-semibold">Date:</span> {{ ride.date }}</p>
+        <p><span class="font-semibold">Time:</span> {{ ride.time }}</p>
+      </div>
+
+      <div class="mb-2 text-gray-700">
+        <p><span class="font-semibold">Seats Booked:</span> {{ ride.seats_booked }}</p>
+        <p><span class="font-semibold">Price per Seat:</span> {{ ride.price_per_seat || '-' }}</p>
+        <p><span class="font-semibold">Total Amount:</span> {{ ride.total_amount || '-' }}</p>
+        <p><span class="font-semibold">Price:</span> {{ ride.price }}</p>
+      </div>
+
+      <div class="mt-2 text-gray-500 text-sm">
+        <p><span class="font-semibold">Created At:</span> {{ ride.created_at }}</p>
+        <p><span class="font-semibold">Updated At:</span> {{ ride.updated_at }}</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -30,6 +30,11 @@ import { UserRidesComponent } from '../user-rides/user-rides.component';
 import { ContactWithUsComponent } from '../contact-with-us/contact-with-us.component';
 import { FaqsComponent } from './faqs/faqs.component';
 import { BuddyrideGuideComponent } from '../pages/blog/buddyride-guide/buddyride-guide.component';
+import { AdminLoginComponent } from '../admin_pannel/admin-login/admin-login.component';
+import { AdminDashboardComponent } from '../admin_pannel/admin-dashboard/admin-dashboard.component';
+import { RideListComponent } from '../admin_pannel/ride-list/ride-list.component';
+import { ComplaintsComponent } from '../admin_pannel/complaints/complaints.component';
+import { AllComplaintsComponent } from '../all-complaints/all-complaints.component';
 
 export const routes: Routes = [
     { path: '', component: SplashComponent },
@@ -60,7 +65,14 @@ export const routes: Routes = [
     { path: 'contact', component: ContactWithUsComponent},
     { path: 'faqs', component: FaqsComponent},
     { path: 'buddyride-guide', component: BuddyrideGuideComponent},
+    { path: 'allcomplaints', component: AllComplaintsComponent},
+    { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
 
-    // { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }
-    { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }
+
+    //admin pannel routes will be here
+     { path: 'admin-login', component: AdminLoginComponent},
+     { path: 'admin-dashboard', component: AdminDashboardComponent},
+     { path: 'ride-list', component: RideListComponent},
+    { path: 'complaints', component: ComplaintsComponent},
+
 ];

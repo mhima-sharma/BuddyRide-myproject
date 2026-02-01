@@ -197,4 +197,20 @@
     <priority>0.6</priority>
   </url>
 
+
+
+  <!-- // Admin Pannel URLs -->
+   <url>
+    <loc>https://buddy-ride-myproject.vercel.app/admin-dashboard</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+   <url>
+    <loc>https://buddy-ride-myproject.vercel.app/admin-login</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
 </urlset>

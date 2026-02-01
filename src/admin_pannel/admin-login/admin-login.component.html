@@ -1,0 +1,30 @@
+<div class="min-h-screen flex items-center justify-center bg-orange-700 px-6">
+  <div class="bg-white text-orange-600 p-8 rounded-2xl w-full max-w-sm shadow-xl">
+
+    <h2 class="text-2xl font-bold text-center mb-6">Admin Login</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="login()" class="space-y-4">
+
+      <input
+        type="email"
+        placeholder="Admin Email"
+        formControlName="email"
+        class="w-full px-4 py-3 rounded-xl border"
+      />
+
+      <input
+        type="password"
+        placeholder="Password"
+        formControlName="password"
+        class="w-full px-4 py-3 rounded-xl border"
+      />
+
+      <button
+        class="w-full bg-orange-600 text-white py-3 rounded-xl font-semibold">
+        Login
+      </button>
+
+      <p *ngIf="error" class="text-red-500 text-center text-sm">{{ error }}</p>
+    </form>
+  </div>
+</div>
