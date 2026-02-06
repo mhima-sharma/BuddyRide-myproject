@@ -1,0 +1,42 @@
+<div class="weather-card" *ngIf="temperature !== null; else loading">
+
+  <!-- TOP -->
+  <div class="top">
+    <div class="location">
+      📍 {{ city || 'Your location' }}
+    </div>
+    <div class="menu">⋯</div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <img
+      *ngIf="weatherIcon"
+      [src]="weatherIcon"
+      alt="weather icon"
+      class="icon"
+    />
+
+    <div class="temp">
+      {{ temperature }}<span>°C</span>
+    </div>
+  </div>
+
+  <!-- DESCRIPTION -->
+  <div class="air">
+    {{ description | titlecase }}
+  </div>
+
+  <!-- ACTION -->
+  <button class="forecast-btn" type="button">
+    See full forecast →
+  </button>
+
+</div>
+
+<!-- LOADING STATE -->
+<ng-template #loading>
+  <div class="weather-card skeleton">
+    Loading weather…
+  </div>
+</ng-template>

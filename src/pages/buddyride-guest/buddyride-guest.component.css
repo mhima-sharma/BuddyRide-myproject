@@ -1,0 +1,108 @@
+
+/* buddyride-guest.component.css */
+.guest-page {
+  font-family: Arial, sans-serif;
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px 10%;
+  background: linear-gradient(135deg, rgb(194 65 12), #ec821e);
+  color: #fff;
+}
+
+.hero-content {
+  max-width: 500px;
+}
+
+.hero-content h1 {
+  font-size: 42px;
+  margin-bottom: 15px;
+}
+
+.hero-media img {
+  max-width: 420px;
+}
+
+.btn {
+  padding: 12px 22px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.btn.primary {
+  background: #fff;
+  color: #fc9332;
+}
+
+.btn.outline {
+  background: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+}
+
+.info, .features, .steps, .cta {
+  padding: 60px 10%;
+  text-align: center;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  margin-top: 40px;
+}
+
+.feature-card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+}
+
+.feature-card img {
+  height: 90px;
+  margin-bottom: 15px;
+}
+
+.steps .step-list {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.step {
+  background: #e8f5e9;
+  padding: 20px 30px;
+  border-radius: 30px;
+  font-weight: bold;
+}
+
+.cta {
+  background: rgb(194 65 12);
+  color: #fff;
+}
+
+.footer {
+  padding: 20px;
+  background: #1b1b1b;
+  color: #aaa;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-media img {
+    margin-top: 30px;
+  }
+}
+

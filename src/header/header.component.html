@@ -23,6 +23,11 @@
         ><i class="fa-solid fa-magnifying-glass"></i> Search</button>
 
         <button
+          routerLink="/what-new"
+          class="text-orange-700 font-medium px-4 py-2 rounded-lg hover:bg-orange-50 transition"
+        ><i class="fa-solid fa-folder-open"></i> what's new </button>
+
+        <button
           routerLink="/pick-up"
           class="text-orange-700 font-medium px-4 py-2 rounded-lg hover:bg-orange-50 transition"
         >Publish Ride</button>
@@ -66,8 +71,9 @@
     class="md:hidden bg-white border-t shadow-lg"
   >
     <div class="px-4 py-4 space-y-2 text-sm">
-      <button routerLink="/search" class="block w-full text-left px-3 py-2 rounded-lg text-orange-700 hover:bg-orange-50 transition">🔍 Search</button>
+      <button routerLink="/search" class="block w-full text-left px-3 py-2 rounded-lg text-orange-700 hover:bg-orange-50 transition"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
       <button routerLink="/pick-up" class="block w-full text-left px-3 py-2 rounded-lg text-orange-700 hover:bg-orange-50 transition">Publish Ride</button>
+      <button routerLink="/what-new" class="block w-full text-left px-3 py-2 rounded-lg text-orange-700 hover:bg-orange-50 transition"><i class="fa-solid fa-folder-open"></i> what's new</button>
       <button routerLink="/my-ride" class="block w-full text-left px-3 py-2 rounded-lg text-orange-700 hover:bg-orange-50 transition">My Rides</button>
       <button routerLink="/profile" class="block w-full text-left px-3 py-2 rounded-lg text-orange-700 hover:bg-orange-50 transition">User Profile</button>
       <button (click)="actionOne()" class="block w-full text-left px-3 py-2 rounded-lg text-orange-700 hover:bg-orange-50 transition">Change Password</button>

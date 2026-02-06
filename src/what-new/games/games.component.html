@@ -1,0 +1,16 @@
+<h2>🎮 Games</h2>
+
+<div class="games-list">
+  <button *ngFor="let game of games" (click)="playGame(game.url)">
+    {{ game.title }}
+  </button>
+</div>
+
+<div class="game-frame" *ngIf="selectedGameUrl">
+  <iframe
+    [src]="selectedGameUrl"
+    width="100%"
+    height="500"
+    frameborder="0">
+  </iframe>
+</div>

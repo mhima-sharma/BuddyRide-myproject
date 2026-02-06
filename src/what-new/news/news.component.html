@@ -1,0 +1,47 @@
+<!-- MAIN CONTENT -->
+<div class="content" *ngIf="articles.length; else noNews">
+
+  <!-- FEATURED NEWS -->
+  <div class="featured">
+    <img
+      [src]="articles[0]?.urlToImage || 'assets/images/news-placeholder.png'"
+      alt="featured news"
+    />
+
+    <div class="overlay">
+      <span class="source">
+        {{ articles[0]?.source?.name || 'News' }}
+      </span>
+      <h1>
+        {{ articles[0]?.title }}
+      </h1>
+    </div>
+  </div>
+
+  <!-- OTHER NEWS -->
+  <div class="news-row">
+    <div
+      class="news-card"
+      *ngFor="let news of articles.slice(1, 6)"
+    >
+      <img
+        [src]="news.urlToImage || 'assets/images/news-placeholder.png'"
+        alt="news image"
+      />
+
+      <h4>{{ news.title }}</h4>
+
+      <span class="source">
+        {{ news.source?.name || 'Unknown source' }}
+      </span>
+    </div>
+  </div>
+
+</div>
+
+<!-- EMPTY / FALLBACK -->
+<ng-template #noNews>
+  <div class="no-news">
+    No news available right now
+  </div>
+</ng-template>

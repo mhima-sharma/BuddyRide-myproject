@@ -1,14 +1,3 @@
-// import { Component } from '@angular/core';
-
-// @Component({
-//   selector: 'app-splash',
-//   imports: [],
-//   templateUrl: './splash.component.html',
-//   styleUrl: './splash.component.css'
-// })
-// export class SplashComponent {
-
-// }
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -17,12 +6,20 @@ import { Router } from '@angular/router';
   templateUrl: './splash.component.html',
 })
 export class SplashComponent implements OnInit {
+
   constructor(private router: Router) {}
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.router.navigate(['/first']); // Navigate to your login or any other route
-    }, 2000); // 3 seconds
+      const token = localStorage.getItem('token'); // or your auth key
+
+      if (token) {
+        // User is logged in
+        this.router.navigate(['/home']);
+      } else {
+        // User is NOT logged in
+        this.router.navigate(['/guest']);
+      }
+    }, 2000);
   }
 }
-

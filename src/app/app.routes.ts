@@ -35,6 +35,8 @@ import { AdminDashboardComponent } from '../admin_pannel/admin-dashboard/admin-d
 import { RideListComponent } from '../admin_pannel/ride-list/ride-list.component';
 import { ComplaintsComponent } from '../admin_pannel/complaints/complaints.component';
 import { AllComplaintsComponent } from '../all-complaints/all-complaints.component';
+import { BuddyrideGuestComponent } from '../pages/buddyride-guest/buddyride-guest.component';
+import { WhatNewComponent } from '../what-new/what-new.component';
 
 export const routes: Routes = [
     { path: '', component: SplashComponent },
@@ -66,6 +68,8 @@ export const routes: Routes = [
     { path: 'faqs', component: FaqsComponent},
     { path: 'buddyride-guide', component: BuddyrideGuideComponent},
     { path: 'allcomplaints', component: AllComplaintsComponent},
+    { path: 'guest', component: BuddyrideGuestComponent},
+    { path: 'what-new', component: WhatNewComponent},
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
 
 

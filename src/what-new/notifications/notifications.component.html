@@ -1,0 +1,58 @@
+<div class="min-h-screen bg-gray-50 px-4 py-8 mt-20">
+  <div class="max-w-4xl mx-auto">
+
+    <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+      🔔 Notifications
+    </h2>
+
+    <!-- LOADER -->
+    <div *ngIf="loading" class="text-center py-10 text-gray-500">
+      Loading notifications...
+    </div>
+
+    <!-- EMPTY -->
+    <div *ngIf="!loading && rides.length === 0" class="text-center py-10 text-gray-400">
+      No notifications yet
+    </div>
+
+    <!-- NOTIFICATION LIST -->
+    <div class="space-y-4">
+      <div
+        *ngFor="let ride of rides"
+        class="bg-white rounded-xl shadow p-4 flex gap-4 items-start">
+
+        <!-- ICON -->
+        <div class="text-orange-600 text-xl">
+          🚗
+        </div>
+
+        <!-- CONTENT -->
+        <div class="flex-1">
+          <div class="font-semibold">
+            {{ ride.from_location }} → {{ ride.to_location }}
+          </div>
+
+          <div class="text-sm text-gray-500 mt-1">
+            {{ ride.date | date }} • {{ ride.time }}
+          </div>
+
+          <div class="text-sm mt-2">
+            Status:
+            <span
+              class="font-semibold capitalize"
+              [ngClass]="{
+                'text-yellow-600': ride.status === 'pending',
+                'text-green-600': ride.status === 'accepted',
+                'text-red-600': ride.status === 'rejected'
+              }">
+              {{ ride.status || 'available' }}
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+

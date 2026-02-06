@@ -1,0 +1,67 @@
+.weather-card {
+  background: linear-gradient(135deg, #5b8cff, #7fb3ff);
+  color: #fff;
+  padding: 16px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  width: 100%;
+  max-width: 280px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.main {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 16px 0;
+}
+
+.icon {
+  width: 48px;
+  height: 48px;
+}
+
+.temp {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.temp span {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.air {
+  font-size: 14px;
+  opacity: 0.9;
+  margin-bottom: 12px;
+}
+
+.forecast-btn {
+  width: 100%;
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: #fff;
+  padding: 8px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.forecast-btn:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+/* Loading */
+.skeleton {
+  text-align: center;
+  opacity: 0.7;
+}
