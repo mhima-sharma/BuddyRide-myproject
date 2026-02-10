@@ -7,6 +7,7 @@ import { GamesComponent } from './games/games.component';
 import { NewsComponent } from './news/news.component';
 import { WeatherComponent } from './weather/weather.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { ForecastComponent } from "./forecast/forecast.component";
 
 @Component({
   selector: 'app-what-new',
@@ -18,8 +19,11 @@ import { NotificationsComponent } from './notifications/notifications.component'
     // NotificationsComponent,
     // GamesComponent,
     // WeatherComponent,
-    NewsComponent
-  ],
+    NewsComponent,
+    GamesComponent,
+    WeatherComponent,
+    // ForecastComponent
+],
   templateUrl: './what-new.component.html',
   styleUrls: ['./what-new.component.css']
 })

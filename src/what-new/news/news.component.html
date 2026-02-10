@@ -1,47 +1,57 @@
 <!-- MAIN CONTENT -->
-<div class="content" *ngIf="articles.length; else noNews">
+<div class="content" *ngIf="articles?.length; else noNews">
 
   <!-- FEATURED NEWS -->
   <div class="featured">
-    <img
-      [src]="articles[0]?.urlToImage || 'assets/images/news-placeholder.png'"
-      alt="featured news"
-    />
+    <a
+      [href]="articles[0]?.url"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <img
+        [src]="articles[0]?.urlToImage || 'assets/images/news-placeholder.png'"
+        alt="featured news"
+      />
 
-    <div class="overlay">
-      <span class="source">
-        {{ articles[0]?.source?.name || 'News' }}
-      </span>
-      <h1>
-        {{ articles[0]?.title }}
-      </h1>
-    </div>
+      <div class="overlay">
+        <span class="source">
+          {{ articles[0]?.source?.name || 'News' }}
+        </span>
+        <h1>{{ articles[0]?.title }}</h1>
+        <p class="read-more">Read full article →</p>
+      </div>
+    </a>
   </div>
 
   <!-- OTHER NEWS -->
   <div class="news-row">
-    <div
+    <a
       class="news-card"
       *ngFor="let news of articles.slice(1, 6)"
+      [href]="news.url"
+      target="_blank"
+      rel="noopener noreferrer"
     >
       <img
         [src]="news.urlToImage || 'assets/images/news-placeholder.png'"
         alt="news image"
       />
 
-      <h4>{{ news.title }}</h4>
-
-      <span class="source">
-        {{ news.source?.name || 'Unknown source' }}
-      </span>
-    </div>
+      <div class="news-info">
+        <h4>{{ news.title }}</h4>
+        <span class="source">
+          {{ news.source?.name || 'Unknown source' }}
+        </span>
+        <span class="read-more">Read →</span>
+      </div>
+    </a>
   </div>
 
 </div>
 
-<!-- EMPTY / FALLBACK -->
+<!-- EMPTY STATE -->
 <ng-template #noNews>
   <div class="no-news">
-    No news available right now
+    📰 No news available right now
   </div>
 </ng-template>

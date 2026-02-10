@@ -3,12 +3,14 @@
 <div class="dashboard">
 
   <!-- GREETING HEADER -->
-  <div class="top-bar">
-    <div class="greeting">
-      <h2>Good morning</h2>
-      <p>{{ today | date:'d MMMM' }}</p>
+   <div>
+      <h2 class="text-xl md:text-2xl font-semibold flex items-center gap-2" style="margin-top: 50px;">
+        🌤 Good Morning
+      </h2>
+      <p class="text-sm opacity-90 mt-1">
+        {{ today | date:'d MMMM, EEEE' }}
+      </p>
     </div>
-  </div>
 
   <!-- NOTIFICATION BAR (GOOD MORNING KE NICHE) -->
   <!-- <div class="notification-bar">
@@ -38,13 +40,17 @@
     <div class="main-content">
 
       <ng-container *ngIf="activeTab === 'games'">
-        <div class="card">🎮 Games content will appear here</div>
-        <div class="card">🎯 Trending games</div>
+        <div class="card"><app-games></app-games></div>
+       
       </ng-container>
 
       <ng-container *ngIf="activeTab === 'weather'">
-        <div class="card">🌤 Weather widget</div>
-        <div class="card">📍 Location based forecast</div>
+        <!-- <div class="card">🌤 Weather widget</div> -->
+        <div class="card"><app-weather></app-weather></div>
+
+        <!-- <div class="card">📍Current Location based forecast
+          <app-forecast></app-forecast>
+        </div> -->
       </ng-container>
 
       <ng-container *ngIf="activeTab === 'news'">

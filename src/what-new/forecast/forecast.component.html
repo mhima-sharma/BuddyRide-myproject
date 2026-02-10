@@ -1,0 +1,30 @@
+<!-- FORECAST DATA -->
+<div class="forecast" *ngIf="forecast.length && !isLoading">
+
+  <div class="forecast-item" *ngFor="let day of forecast">
+    <div class="day">
+      {{ day.dt_txt | date:'EEE' }}
+    </div>
+
+    <img
+      [src]="'https://openweathermap.org/img/wn/' + day.weather[0].icon + '@2x.png'"
+      alt="forecast icon"
+    />
+
+    <div class="temp">
+      {{ day.main.temp | number:'1.0-0' }}°C
+    </div>
+  </div>
+
+</div>
+
+<!-- LOADING -->
+<div class="forecast loading" *ngIf="isLoading">
+  <i class="fas fa-spinner fa-spin"></i>
+  Loading forecast…
+</div>
+
+<!-- ERROR -->
+<div class="forecast error" *ngIf="!isLoading && errorMsg">
+  {{ errorMsg }}
+</div>

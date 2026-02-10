@@ -1,16 +1,32 @@
-<h2>🎮 Games</h2>
+<h2 class="section-title">🎮 Games</h2>
 
-<div class="games-list">
-  <button *ngFor="let game of games" (click)="playGame(game.url)">
-    {{ game.title }}
-  </button>
+<div class="games-grid">
+
+  <div
+    class="game-card"
+    *ngFor="let game of games"
+    (click)="playGame(game.url)"
+  >
+    <img
+      [src]="game.thumbnail || 'assets/images/game-placeholder.png'"
+      alt="game thumbnail"
+    />
+
+    <div class="game-info">
+      <h4>{{ game.title }}</h4>
+      <span class="play-text">Play now →</span>
+    </div>
+  </div>
+
 </div>
 
+<!-- GAME PLAYER -->
 <div class="game-frame" *ngIf="selectedGameUrl">
   <iframe
     [src]="selectedGameUrl"
     width="100%"
     height="500"
-    frameborder="0">
-  </iframe>
+    frameborder="0"
+    allowfullscreen
+  ></iframe>
 </div>

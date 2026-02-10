@@ -5,6 +5,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 interface Game {
   title: string;
   url: string;
+  thumbnail?: string; // 👈 added
 }
 
 @Component({
@@ -18,12 +19,14 @@ export class GamesComponent {
 
   games: Game[] = [
     {
-      title: 'Tick Tack Game',
-      url: 'https://mhima-sharma.github.io/-tick-tack-/'
+      title: 'Tic Tac Toe',
+      url: 'https://mhima-sharma.github.io/-tick-tack-/',
+      thumbnail: 'assets/images/tictack.png' 
     },
     {
       title: 'Random Math Problem',
-      url: 'https://mhima-sharma.github.io/random-math-problem/'
+      url: 'https://mhima-sharma.github.io/random-math-problem/',
+      thumbnail: 'assets/images/mathgame.png'
     }
   ];
 

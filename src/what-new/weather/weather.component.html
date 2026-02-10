@@ -1,42 +1,52 @@
-<div class="weather-card" *ngIf="temperature !== null; else loading">
+<!-- WEATHER FEATURED -->
+<div class="weather-featured" *ngIf="temperature !== null; else loading">
 
-  <!-- TOP -->
+  <!-- TOP BAR -->
   <div class="top">
     <div class="location">
-      📍 {{ city || 'Your location' }}
+      <i class="fas fa-location-dot"></i>
+      <span>{{ city || 'Your location' }}</span>
     </div>
-    <div class="menu">⋯</div>
+
+    <div class="search-box">
+      <i class="fas fa-magnifying-glass"></i>
+      <input
+        type="text"
+        placeholder="Search city..."
+        [(ngModel)]="searchCity"
+        (keyup.enter)="searchWeather()"
+      />
+    </div>
   </div>
 
   <!-- MAIN -->
   <div class="main">
-    <img
-      *ngIf="weatherIcon"
-      [src]="weatherIcon"
-      alt="weather icon"
-      class="icon"
-    />
+    <div class="left">
+      <img
+        *ngIf="weatherIcon"
+        [src]="weatherIcon"
+        alt="weather icon"
+        class="icon"
+      />
+    </div>
 
-    <div class="temp">
-      {{ temperature }}<span>°C</span>
+    <div class="right">
+      <div class="temp">
+        {{ temperature }}<span>°C</span>
+      </div>
+      <div class="air">
+        <i class="fas fa-cloud-sun"></i>
+        {{ description | titlecase }}
+      </div>
     </div>
   </div>
 
-  <!-- DESCRIPTION -->
-  <div class="air">
-    {{ description | titlecase }}
-  </div>
-
-  <!-- ACTION -->
-  <button class="forecast-btn" type="button">
-    See full forecast →
-  </button>
-
 </div>
 
-<!-- LOADING STATE -->
+<!-- LOADING -->
 <ng-template #loading>
-  <div class="weather-card skeleton">
+  <div class="weather-featured skeleton">
+    <i class="fas fa-spinner fa-spin"></i>
     Loading weather…
   </div>
 </ng-template>
