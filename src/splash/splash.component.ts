@@ -18,7 +18,7 @@ export class SplashComponent implements OnInit {
         this.router.navigate(['/home']);
       } else {
         // User is NOT logged in
-        this.router.navigate(['/guest']);
+        this.router.navigate(['/first']);
       }
     }, 2000);
   }
